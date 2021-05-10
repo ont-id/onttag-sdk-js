@@ -1,5 +1,6 @@
 const initTest: string = 'hi, boy!';
-
-export default {
-    initTest
+const initWord: string = 'hi, girl!';
+export {
+    initTest,
+    initWord
 }

@@ -1,4 +1,5 @@
-const path = require('path')
+// eslint-disable-next-line import/no-extraneous-dependencies
+const path = require('path');
 
 module.exports = {
   entry: './src/index.ts',
@@ -18,5 +19,6 @@ module.exports = {
     libraryTarget: 'umd',
     filename: 'index.js',
     path: path.resolve(__dirname, 'lib'),
+    globalObject: 'this',
   },
-}
+};
