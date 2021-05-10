@@ -1,10 +1,15 @@
 {
     "name": "@ericyangchen/npmyangtest",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "npm test package ericyang",
     "license": "MIT",
     "repository": "https://github.com/ErickYangs/npmyangtest.git",
-    "main": "./index.js",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --mode=production",
+        "serve": "webpack serve --mode=development"
+    },
     "keywords": [
         "eric",
         "yang",
@@ -13,5 +18,13 @@
     ],
     "publishConfig": {
         "access": "public"
+    },
+    "dependencies": {
+        "html-webpack-plugin": "^5.3.1",
+        "ts-loader": "^9.1.2",
+        "typescript": "^4.2.4",
+        "webpack": "^5.36.2",
+        "webpack-cli": "^4.7.0",
+        "webpack-dev-server": "^3.11.2"
     }
 }
