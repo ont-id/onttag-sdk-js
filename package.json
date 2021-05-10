@@ -1,7 +1,16 @@
 {
     "name": "@ericyangchen/npmyangtest",
     "version": "1.0.0",
+    "description": "npm test package ericyang",
+    "license": "MIT",
+    "repository": "https://github.com/ErickYangs/npmyangtest.git",
     "main": "./index.js",
+    "keywords": [
+        "eric",
+        "yang",
+        "ericyang",
+        "package"
+    ],
     "publishConfig": {
         "access": "public"
     }
