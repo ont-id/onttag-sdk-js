@@ -14,6 +14,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      crypto: false
+    },
   },
   output: {
     libraryTarget: 'umd',
