@@ -3,7 +3,7 @@ import axios from "axios";
 const service = axios.create({
   timeout: 60 * 1000, // request timeout
   headers: { "Content-Type": "application/json" },
-  baseURL: ''
+  baseURL: 'http://192.168.1.115:8585'
 });
 // request interceptor
 service.interceptors.request.use(
@@ -22,7 +22,7 @@ service.interceptors.response.use(
     // if (response.headers.authorization) {
     //   setToken(response.headers.authorization)
     // }
-    return response.data;
+    return response;
   },
   (error) => {
     return Promise.reject(error);
