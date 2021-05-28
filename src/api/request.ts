@@ -1,9 +1,10 @@
 import axios from "axios";
-
+//http://45.43.63.208:8585
+//http://192.168.1.115:8585
 const service = axios.create({
   timeout: 60 * 1000, // request timeout
   headers: { "Content-Type": "application/json" },
-  baseURL: 'http://192.168.1.115:8585'
+  baseURL: 'http://45.43.63.208:8585'
 });
 // request interceptor
 service.interceptors.request.use(

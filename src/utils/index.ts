@@ -1,4 +1,7 @@
 import CryptoJS from 'crypto-js'
+import { decode } from 'base64-url'
+import moment from 'moment';
+import { credentialType, headerType, bodyType } from '../type'
 
 export const HmacSHA256 = (message: string, key: string) => {
   return CryptoJS.HmacSHA256(message, key).toString()
@@ -59,5 +62,39 @@ export const generateId = (account: string): string => {
   if (account.indexOf('0x') <= -1) {
     throw new Error('Incorrect account format')
   }
-  return 'did:bsc:' + account.substring(2, account.length);
+  return 'did:ont:' + account.substring(2, account.length);
+}
+
+
+export const Base64Decode = (str: string) => {
+  return decode(str);
+}
+
+/**
+ *
+ * @param JWTStr jwt string
+ * @returns credentialType object
+ */
+export const deserialize = (JWTStr: string): credentialType => {
+  let arr = JWTStr.split('.');
+  console.log('arr', arr);
+  let header: headerType = JSON.parse(Base64Decode(arr[0]));
+  let bodyData: bodyType = JSON.parse(Base64Decode(arr[1]))
+  let result: credentialType = {
+    "@context": bodyData.vc["@context"],
+    id: bodyData.jti,
+    type: bodyData.vc.type,
+    issuer: bodyData.iss,
+    issuanceDate: moment(bodyData.iat * 1000).utc().toISOString(),
+    expirationDate: moment(bodyData.exp * 1000).utc().toISOString(),
+    credentialStatus: bodyData.vc.credentialStatus,
+    credentialSubject: bodyData.vc.credentialSubject,
+    proof: {
+      type: header.typ,
+      verificationMethod: header.kid,
+      ...bodyData.vc.proof,
+      jws: arr[2]
+    }
+  }
+  return result;
 }

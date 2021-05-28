@@ -4,18 +4,18 @@ import { AxiosResponse } from "axios";
 import { ApiResponse, ApiAllVcResult } from '../type';
 import request from "./request";
 
-export const getVcList = async (ontid: string = ''): Promise<any> => {
-  const { data }: AxiosResponse<ApiResponse<ApiAllVcResult>> = await request({
-    url: '',
-    method: 'POST',
-    data: {
-      ontid
-    }
+export const getVcList = async (accountId: string = ''): Promise<any> => {
+  if (!accountId) {
+    throw new Error('No account id');
+  }
+  const { data }: AxiosResponse<ApiResponse<object>> = await request({
+    url: '/v1/credentials/'+accountId,
+    method: 'GET',
   })
   if (data.error !== 0) {
     throw new Error(data.desc)
   }
-  return data.result.list
+  return data.result
 }
 
 export const sendUserInfo = async (params: SendUserInfo, apiKey: string): Promise<boolean> => {
