@@ -123,7 +123,7 @@ did string
 
 
 
-`base64Decode`
+`deserialize`
 
 ```javascript
 import { utils } from 'xxxx'

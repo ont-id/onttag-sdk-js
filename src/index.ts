@@ -1,9 +1,9 @@
 import { sendUserInfo, getVcList } from "./api";
-import { Base64Decode, generateId } from './utils/index'
+import { deserialize, generateId } from './utils/index'
 import { countryList} from './utils/country'
 
 const utils = {
-  base64Decode:Base64Decode,
+  deserialize,
   generateId,
   countryList
 }
