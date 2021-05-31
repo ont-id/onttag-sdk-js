@@ -66,6 +66,11 @@ export const generateId = (account: string): string => {
 }
 
 
+/**
+ *
+ * @param str base64 string
+ * @returns decode string
+ */
 export const Base64Decode = (str: string) => {
   return decode(str);
 }
@@ -77,7 +82,7 @@ export const Base64Decode = (str: string) => {
  */
 export const deserialize = (JWTStr: string): credentialType => {
   let arr = JWTStr.split('.');
-  console.log('arr', arr);
+  // console.log('arr', arr);
   let header: headerType = JSON.parse(Base64Decode(arr[0]));
   let bodyData: bodyType = JSON.parse(Base64Decode(arr[1]))
   let result: credentialType = {
