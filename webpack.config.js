@@ -15,7 +15,8 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      crypto: false
+      crypto: false,
+      stream: false,
     },
   },
   output: {
