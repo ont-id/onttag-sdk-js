@@ -1,7 +1,8 @@
 import CryptoJS from 'crypto-js'
 import { decode } from 'base64-url'
 import moment from 'moment';
-import { credentialType, headerType, bodyType } from '../type'
+import { credentialType, headerType, bodyType, presentationType } from '../type'
+import { Credentials } from 'ontology-ts-sdk'
 
 export const HmacSHA256 = (message: string, key: string) => {
   return CryptoJS.HmacSHA256(message, key).toString()
@@ -102,4 +103,18 @@ export const deserialize = (JWTStr: string): credentialType => {
     }
   }
   return result;
+}
+
+/**
+ *
+ * @param presentation user info include jwt, audience, ownerDid
+ * @returns JWT String
+ */
+
+export const createJWTPresentation = (presentation: presentationType): string => {
+  const { issuer } = deserialize(presentation.jwtStr);
+  const verifiablePresentationAttribute = new Credentials.VerifiablePresentationAttribute([presentation.jwtStr]);
+  const vpPayload = new Credentials.VpPayload(issuer, verifiablePresentationAttribute, Date.now(), presentation.audienceId, presentation.ownerDid, new Date());
+  const serialized = vpPayload.serialize();
+  return serialized;
 }

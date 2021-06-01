@@ -174,3 +174,24 @@ return type
 **/
 ```
 
+`createJWTPresentation`
+
+```javascript
+
+import { utils } from 'xxxx'
+
+/**
+params
+{
+  jwtStr: string, // jwt
+  audienceId: string, // pro Id
+  ownerDid: string    // user wallet address
+}
+**/
+const JWT = utils.createJWTPresentation(params);
+
+/**
+return 
+jwt string
+**/
+```

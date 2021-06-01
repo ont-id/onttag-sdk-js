@@ -1,11 +1,12 @@
 import { sendUserInfo, getVcList } from "./api";
-import { deserialize, generateId } from './utils/index'
+import { deserialize, generateId, createJWTPresentation } from './utils/index'
 import { countryList} from './utils/country'
 
 const utils = {
   deserialize,
   generateId,
-  countryList
+  countryList,
+  createJWTPresentation
 }
 export {
     sendUserInfo,

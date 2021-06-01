@@ -1,6 +1,6 @@
 {
   "name": "@ericyangchen/npmyangtest",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "npm test package ericyang",
   "license": "MIT",
   "repository": "https://github.com/ErickYangs/npmyangtest.git",
@@ -38,7 +38,7 @@
     "eslint-plugin-import": "^2.22.1",
     "html-webpack-plugin": "^5.3.1",
     "moment": "^2.29.1",
-    "ontology-ts-sdk": "^1.1.19",
+    "ontology-ts-sdk": "^1.1.20",
     "ts-loader": "^9.1.2",
     "typescript": "^4.2.4",
     "web3": "^1.3.6",

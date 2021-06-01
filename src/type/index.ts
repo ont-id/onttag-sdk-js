@@ -51,7 +51,7 @@ export interface bodyType {
     "@context": Array<string>,
     type: Array<string>,
     credentialSubject: object,
-    credentialStatus:object,
+    credentialStatus: object,
     proof: {
       created: string,
       proofPurpose: string
@@ -69,4 +69,10 @@ export interface credentialType {
   credentialSubject: object,
   credentialStatus: object,
   proof: proofType
+}
+
+export interface presentationType {
+  jwtStr: string,
+  audienceId: string,
+  ownerDid: string
 }
