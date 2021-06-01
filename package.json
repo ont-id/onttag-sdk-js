@@ -1,6 +1,6 @@
 {
   "name": "@ericyangchen/npmyangtest",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "npm test package ericyang",
   "license": "MIT",
   "repository": "https://github.com/ErickYangs/npmyangtest.git",
@@ -27,35 +27,35 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@typescript-eslint/parser": "^4.23.0",
     "assert": "^2.0.0",
     "axios": "^0.21.1",
     "base64-url": "^2.3.3",
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.0.0",
-    "eslint": "^7.22.0",
-    "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-plugin-import": "^2.22.1",
-    "html-webpack-plugin": "^5.3.1",
     "moment": "^2.29.1",
     "ontology-ts-sdk": "^1.1.20",
     "stream-browserify": "^3.0.0",
-    "ts-loader": "^9.1.2",
     "typescript": "^4.2.4",
-    "web3": "^1.3.6",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "web3": "^1.3.6"
   },
   "devDependencies": {
     "@types/base64-url": "^2.2.0",
     "@types/crypto-js": "^4.0.1",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "html-webpack-plugin": "^5.3.1",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6",
-    "ts-node": "^9.1.1"
+    "ts-loader": "^9.1.2",
+    "ts-node": "^9.1.1",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "browser": {
     "crypto": false,
