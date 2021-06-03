@@ -36,7 +36,7 @@ module.exports = [
       path: path.resolve(__dirname, 'lib'),
       filename: 'browser.js',
       libraryTarget: 'var',
-      library: 'Ont' // This is the var name in browser
+      library: 'VC' // This is the var name in browser
     },
   }),
   Object.assign({}, common, {
