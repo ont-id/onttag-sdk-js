@@ -13,6 +13,40 @@ yarn add xxx
 
 
 
+Using `import` to include the modules from `xxx`:
+
+```javascript
+import VC from xxx;
+var countryList = VC.utils.countryList
+```
+
+
+
+#### Require
+
+Using `require` to include the modules from `xxx`:
+
+```javascript
+var VC = require(xxx);
+var countryList = VC.utils.countryList
+```
+
+#### In the Browser
+
+To use in the browser you must use the compiled version (as listed above). The `browser.js` file is located in the `lib` directory. Include it into the project with a `<script>` tag:
+
+```html
+<script src="./lib/browser.js"></script>
+```
+
+Everything will be available under the `VC` variable, just like in the `require` example above.
+
+```javascript
+var countryList = VC.utils.countryList
+```
+
+
+
 #### 使用
 
 ##### 发送验证信息
