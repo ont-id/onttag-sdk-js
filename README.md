@@ -7,6 +7,8 @@
 ```javascript
 // 插件名称待定
 npm i xxx
+
+yarn add xxx
 ```
 
 
@@ -16,7 +18,7 @@ npm i xxx
 ##### 发送验证信息
 
 ```javascript
-import { sendUserInfo } from 'xxxx'
+import VC from 'xxxx'
 
 /***
 params
@@ -32,7 +34,7 @@ params
 }
 **/
 
-await sendUserInfo({...params}, apiKey)
+await VC.sendUserInfo({...params}, apiKey)
 
 /***
 returnType 
@@ -46,14 +48,14 @@ returnType
 ##### 获取用户 `credential`
 
 ```javascript
-import { getVcList } from 'xxxx'
+import VC from 'xxxx'
 
 /**
 params
 ownerDid: string,  sdk 方法生成
 **/
 
-const result = await getVcList(ownerDid);
+const result = await VC.getVcList(ownerDid);
 
 /**
 return 
@@ -82,9 +84,9 @@ return
 ##### `countryList`
 
 ```javascript
-import { utils } from 'xxxx'
+import VC from 'xxxx'
 
-utils.countryList
+VC.utils.countryList
 
 /**
 return array
@@ -107,13 +109,13 @@ alias ---- abbreviation, 用户选择的 country value
 `generateId`
 
 ```javascript
-import { utils } from 'xxxx'
+import VC from 'xxxx'
 
 /**
 params
 ETH Address
 **/
-const ownerDid = utils.generateId('0xaaaaaaaaaaaaa');
+const ownerDid = VC.utils.generateId('0xaaaaaaaaaaaaa');
 
 /**
 return 
@@ -126,14 +128,14 @@ did string
 `deserialize`
 
 ```javascript
-import { utils } from 'xxxx'
+import VC from 'xxxx'
 
 /**
 params
 encryptOriginData of credential result
 base64 hash string
 **/
-const result = utils.deserialize(string)
+const result = VC.utils.deserialize(string)
 
 
 /**
@@ -178,7 +180,7 @@ return type
 
 ```javascript
 
-import { utils } from 'xxxx'
+import VC from 'xxxx'
 
 /**
 params
@@ -188,7 +190,7 @@ params
   ownerDid: string    // user wallet address
 }
 **/
-const JWT = utils.createJWTPresentation(params);
+const JWT = VC.utils.createJWTPresentation(params);
 
 /**
 return 
