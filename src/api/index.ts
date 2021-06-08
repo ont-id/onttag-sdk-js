@@ -15,6 +15,8 @@ export const getVcList = async (accountId: string = '', docType: string): Promis
       credentialContext = CredentialContextType[key]
     }
   });
+  console.log('accountId', accountId)
+  console.log('credentialContext',credentialContext)
   const { data }: AxiosResponse<ApiResponse<object>> = await request({
     url: '/v1/credentials/' + accountId + '?credential_context=' + credentialContext,
     method: 'GET',

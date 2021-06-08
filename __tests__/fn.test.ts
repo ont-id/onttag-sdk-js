@@ -2,7 +2,13 @@ import {Claim} from 'ontology-ts-sdk'
 import Web3 from 'web3';
 import {getVcList, sendUserInfo} from "../src/api";
 import {chainType, DocType, presentationType} from '../src/type/index'
-import {Base64Decode, deserialize, generateId, serializeSignMessage} from "../src/utils";
+import {
+  Base64Decode,
+  deserialize,
+  generateId,
+  HmacSHA256,
+  serializeSignMessage
+} from "../src/utils";
 import {areaList} from "../src/utils/country";
 import {userInfo} from './info'
 
@@ -14,7 +20,8 @@ describe("test user info", () => {
   }, 30000)
   test("get user vc", async () => {
     const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
-    const result = await getVcList(accountId, DocType.Passport);
+    // did:ont:0x5c7b386B2B8779304E701CbBE22a53671446629b
+    const result = await getVcList('did:ont:5c7b386B2B8779304E701CbBE22a53671446629b', DocType.Passport);
     console.log('result', result);
   })
 })
@@ -22,6 +29,17 @@ describe("test user info", () => {
 describe("test country list", () => {
   test("produce all dessert", () => {
     console.log(areaList);
+  })
+})
+
+describe("test hmac fn", () => {
+  test("HmacSHA256", () => {
+    // let a = {
+    //   age: 12,
+    //   name: 'zzzz'
+    // }
+    let str = HmacSHA256('age=12&name=zzzz', '22222')
+    console.log('str', str)
   })
 })
 

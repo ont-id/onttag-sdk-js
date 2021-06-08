@@ -17,6 +17,7 @@ Using `import` to include the modules from `xxx`:
 
 ```javascript
 import VC from xxx;
+
 var areaList = VC.utils.areaList
 ```
 
