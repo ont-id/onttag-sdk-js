@@ -4,7 +4,7 @@
 
 #### 安装
 
-```javascript
+```node
 // 插件名称待定
 npm i xxx
 
@@ -17,7 +17,7 @@ Using `import` to include the modules from `xxx`:
 
 ```javascript
 import VC from xxx;
-var countryList = VC.utils.countryList
+var areaList = VC.utils.areaList
 ```
 
 
@@ -28,7 +28,7 @@ Using `require` to include the modules from `xxx`:
 
 ```javascript
 var VC = require(xxx);
-var countryList = VC.utils.countryList
+var areaList = VC.utils.areaList
 ```
 
 #### In the Browser
@@ -42,7 +42,7 @@ To use in the browser you must use the compiled version (as listed above). The `
 Everything will be available under the `VC` variable, just like in the `require` example above.
 
 ```javascript
-var countryList = VC.utils.countryList
+var areaList = VC.utils.areaList
 ```
 
 
@@ -87,9 +87,10 @@ import VC from 'xxxx'
 /**
 params
 ownerDid: string,  sdk 方法生成
+docType: string 证件类型
 **/
 
-const result = await VC.getVcList(ownerDid);
+const result = await VC.getVcList(ownerDid, docType);
 
 /**
 return 
@@ -115,12 +116,12 @@ return
 
 #### `utils` 方法
 
-##### `countryList`
+##### `areaList`
 
 ```javascript
 import VC from 'xxxx'
 
-VC.utils.countryList
+VC.utils.areaList
 
 /**
 return array
@@ -138,6 +139,46 @@ alias ---- abbreviation, 用户选择的 country value
 
 ```
 
+##### `docType`
+
+```javascript
+import VC from 'xxxx'
+
+VC.utils.docType
+
+/**
+return object
+
+{
+  Passport: 'passport',
+  IdCard: 'id_card',
+  DrivingLicense: 'driving_license'
+}
+
+**/
+
+```
+
+
+
+##### `chainType`
+
+```javascript
+import VC from 'xxxx'
+
+VC.utils.chainType
+
+/**
+return object
+
+{
+  ETH: 'eth',
+  BSC: 'bnb'
+}
+
+**/
+
+```
 
 
 `generateId`
@@ -149,7 +190,7 @@ import VC from 'xxxx'
 params
 ETH Address
 **/
-const ownerDid = VC.utils.generateId('0xaaaaaaaaaaaaa');
+const ownerDid = VC.utils.generateId('0xaaaaaaaaaaaaa', chainType);
 
 /**
 return 
@@ -210,7 +251,7 @@ return type
 **/
 ```
 
-`createJWTPresentation`
+`serializeSignMessage`
 
 ```javascript
 
@@ -224,7 +265,7 @@ params
   ownerDid: string    // user wallet address
 }
 **/
-const JWT = VC.utils.createJWTPresentation(params);
+const JWT = VC.utils.serializeSignMessage(params);
 
 /**
 return 

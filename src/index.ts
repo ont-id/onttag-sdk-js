@@ -1,15 +1,18 @@
+import { DocType, chainType } from "./type";
 import { sendUserInfo, getVcList } from "./api";
-import { deserialize, generateId, createJWTPresentation } from './utils/index'
-import { countryList} from './utils/country'
+import { deserialize, generateId, serializeSignMessage, } from './utils/index'
+import { areaList } from './utils/country'
 
 const utils = {
   deserialize,
   generateId,
-  countryList,
-  createJWTPresentation
+  areaList,
+  serializeSignMessage,
+  docType: DocType,
+  chainType
 }
 export {
-    sendUserInfo,
-    getVcList,
-    utils
+  sendUserInfo,
+  getVcList,
+  utils
 }

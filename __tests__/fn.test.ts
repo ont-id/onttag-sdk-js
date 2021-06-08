@@ -1,27 +1,27 @@
-import {Base64Decode, deserialize, generateId, createJWTPresentation} from "../src/utils";
-import { countryList } from "../src/utils/country";
-import { getVcList, sendUserInfo } from "../src/api";
-import { userInfo } from './info'
-import { presentationType } from '../src/type/index'
+import {Claim} from 'ontology-ts-sdk'
 import Web3 from 'web3';
-import { Claim } from 'ontology-ts-sdk'
+import {getVcList, sendUserInfo} from "../src/api";
+import {chainType, DocType, presentationType} from '../src/type/index'
+import {Base64Decode, deserialize, generateId, serializeSignMessage} from "../src/utils";
+import {areaList} from "../src/utils/country";
+import {userInfo} from './info'
 
 describe("test user info", () => {
   test("send user info", async () => {
-    const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b');
+    const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     let result = await sendUserInfo({ ...userInfo, ownerDid }, '521113c1-9e5b-4d00-b137-c91ecad424ff');
     console.log('result', result)
   }, 30000)
   test("get user vc", async () => {
-    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b');
-    const result = await getVcList(accountId);
+    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    const result = await getVcList(accountId, DocType.Passport);
     console.log('result', result);
   })
 })
 
 describe("test country list", () => {
   test("produce all dessert", () => {
-    console.log(countryList);
+    console.log(areaList);
   })
 })
 
@@ -71,13 +71,13 @@ describe("test sign verify message", () => {
   })
   test("test createJWTPresentation str", async () => {
     let str = 'eyJhbGciOiJFUzI1NiIsImtpZCI6ImRpZDpvbnQ6QVBjOEZCZEdZZHpEdFdyRnA4cTJCU1VGWDJIQW5CdUJuYSNrZXlzLTEiLCJ0eXAiOiJKV1QifQ==.eyJpc3MiOiJkaWQ6b250OkFQYzhGQmRHWWR6RHRXckZwOHEyQlNVRlgySEFuQnVCbmEiLCJleHAiOjE2NTM3MjE0NjMsIm5iZiI6MTYyMjE4NTQ2MywiaWF0IjoxNjIyMTg1NDYzLCJqdGkiOiJ1cm46dXVpZDo4NjFjYmFlNC1jM2Y4LTQ4NDQtOTNkNS04YzgyNWNlZDcwNTIiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vb250aWQub250LmlvL2NyZWRlbnRpYWxzL3YxIiwiY3JlZGVudGlhbDpzZnBfcGFzc3BvcnRfYXV0aGVudGljYXRpb24iXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCJdLCJjcmVkZW50aWFsU3ViamVjdCI6eyJOYW1lIjoiSFNVQU4gWUFORyIsIkJpcnRoRGF5IjoiMTk5NC0wMy0wOSIsIkV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMy0xMiIsIklERG9jTnVtYmVyIjoiRU0yNjAzODYiLCJJc3N1ZXJOYW1lIjoiU2h1ZnRpcHJvIiwidXNlcl9kaWQiOiJkaWQ6b250OjVjN2IzODZCMkI4Nzc5MzA0RTcwMUNiQkUyMmE1MzY3MTQ0NjYyOWIifSwiY3JlZGVudGlhbFN0YXR1cyI6eyJpZCI6IjRmN2YxNTlhYzRiOTkxM2JiMTg1ZmRmMTg5NTcwNWY2MWI3ZDBjYzYiLCJ0eXBlIjoiQXR0ZXN0Q29udHJhY3QifSwicHJvb2YiOnsiY3JlYXRlZCI6IjIwMjEtMDUtMjhUMDc6MDQ6MjNaIiwicHJvb2ZQdXJwb3NlIjoiYXNzZXJ0aW9uTWV0aG9kIn19fQ==.ARyjaIxBhT3n6/KcV0dqHZhng8EVrt5k9Lh+94UiTx3GDisGMJdFE/4erXIazh3n8ipPotTFA+Z4hS09GlhVaio=\\.eyJUeXBlIjoiTWVya2xlUHJvb2YiLCJNZXJrbGVSb290IjoiMzM5NTcxY2FkODE3NmM1Y2Y3NDhjMjViZDRlMGI4YmZjMGFjOThhMTc1YjdhMDNjMWQ0NDIzMjg1NjU4MzIxNiIsIlR4bkhhc2giOiI5NDk0NTY4MzM2YTRjMjM5OWEzN2JjZmU3MWY0MmE4MjY5YTg4NjQ1NGJhMDkzNWUxYmFhMDY2ZTE1ODVmZTQ3IiwiQmxvY2tIZWlnaHQiOjE2MDI0NDQ3LCJOb2RlcyI6W3siVGFyZ2V0SGFzaCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJEaXJlY3Rpb24iOiJMZWZ0In0seyJUYXJnZXRIYXNoIjoiNzdjNWRiZmJjYTI3Y2NkZWNlNzY1ZWMwNTgzNmM1NjFhNTcxZjAxOGJmZGVlZDc4YjdkMmFlZWNkMDk4MDdhZSIsIkRpcmVjdGlvbiI6IkxlZnQifSx7IlRhcmdldEhhc2giOiIwY2QwYTZiYWI3NzlkODdjZjE5NThmYTNhOGUzYzE5ZTMxNTkxZGUzMjUxZmVjNGVlNmY2ZDdiMzllYTFmZjYwIiwiRGlyZWN0aW9uIjoiTGVmdCJ9LHsiVGFyZ2V0SGFzaCI6ImY0NDA1MzE5OTljNTQ3ZGIwOGY1MTY2NzdjMTUyMjE1NDc1YTY5ZGNjYjgyMTc2ZTRiY2ExYjcyNjI2MWExYmUiLCJEaXJlY3Rpb24iOiJMZWZ0In0seyJUYXJnZXRIYXNoIjoiYTExNDE3Nzk5ZjY4NWMxNjcxNTVjNzhjYWJjY2ZkZjZkMDhkNjNiZTIzYTUzZjY3MjgxNzlkOGE2ZTZjMDViNyIsIkRpcmVjdGlvbiI6IkxlZnQifSx7IlRhcmdldEhhc2giOiI3NGI5Mjc0MGU4MmU1MDhjYzAyNjQ4YWI0OWUyMWUxY2FiYzQzYWU1M2Q3MzljYTI4ZGJkZmI3MGZlZDEwM2JjIiwiRGlyZWN0aW9uIjoiTGVmdCJ9LHsiVGFyZ2V0SGFzaCI6IjhhZTIyZDYyNzM2ZjQ4MTJkZWM1NzcxMzVjY2FmN2Y5NGJhNzQ5NGQ4ZWE2Nzg0ODMxMTM4MmMxOTExOGMyYzkiLCJEaXJlY3Rpb24iOiJMZWZ0In0seyJUYXJnZXRIYXNoIjoiOGU3NGQ2YzY3MjQwZDdkYjVlNjg1NmI0YzZkOTQ5NDkyMjlkMjZjOThlOGY0Nzc0ZGJiNzdkN2U0NjViNjliYSIsIkRpcmVjdGlvbiI6IkxlZnQifSx7IlRhcmdldEhhc2giOiIxOWM5YWEwMGM0N2ZhYmQ2OWZmYzNhYjg4ODFmNjAwZmI1M2Y5Y2NlNzUxNmI0ZmU2ODgyZDE0ZjY0OTEzYzg5IiwiRGlyZWN0aW9uIjoiTGVmdCJ9LHsiVGFyZ2V0SGFzaCI6ImI0YWFkNTg5OWNiNjcyZGFiOWFkMGMxNTFiNDU4ODUxNmI0MWNkYjNkMzEzNDY0MjUyZDIyMDc1YWE0Nzc1MTYiLCJEaXJlY3Rpb24iOiJMZWZ0In0seyJUYXJnZXRIYXNoIjoiNmUxMmY3YTEzNWY4MTA1ZWY2ZTg0MzcwMDkxNDMyOGJhMjYwYWQxZGM3MGQxYTkzMmMwNWJhMDMwNjlmMmQ3ZCIsIkRpcmVjdGlvbiI6IkxlZnQifSx7IlRhcmdldEhhc2giOiI5YTQ0MzNkYTg1MjI5YWRiNGYyOTdjZjAxYmU2YTU1NGNhZjI4NzRlZWZhNzY5ZDI2NDE5OTRkN2I2MTc5ODNhIiwiRGlyZWN0aW9uIjoiTGVmdCJ9LHsiVGFyZ2V0SGFzaCI6IjU2NDc2MTRiMGYxMzU1ZWY3NDFhZGU3NTk0ZjJmYTU0OTVmNDJiNDRlY2M2ZTQ4MmQ1OWUwNjE4OTIyZGNkNDYiLCJEaXJlY3Rpb24iOiJMZWZ0In0seyJUYXJnZXRIYXNoIjoiMzUyNjMzNGFiZDc3MGQ5MjExZDljYjVjZGVjMDJjYmUxNmUxMWM5NzBhZGRmOTI4N2FhYWY2YzFhMjAyMGJlNyIsIkRpcmVjdGlvbiI6IkxlZnQifSx7IlRhcmdldEhhc2giOiI4ZWUwZGEzNmY5MThhMTMzZWNkMmI2MWJkNGQ3YWMyZDY1NjFmMDhhYWJlMWU2NDllMWI5MTEwYmVhN2Q2NDc1IiwiRGlyZWN0aW9uIjoiTGVmdCJ9XSwiQ29udHJhY3RBZGRyIjoiMzZiYjVjMDUzYjZiODM5YzhmNmI5MjNmZTg1MmY5MTIzOWI5ZmNjYyJ9';
-    const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b');
+    const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     const presentation: presentationType = {
       jwtStr: str,
       audienceId: 'did:ont:AUokgZN93vGemHootneWfuhogShVZCz6nX',
       ownerDid
     }
-    const result = createJWTPresentation(presentation);
+    const result = serializeSignMessage(presentation);
     console.log('result', result);
   })
 })

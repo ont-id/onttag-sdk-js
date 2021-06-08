@@ -1,15 +1,22 @@
 import { CredentialContextType, SendUserInfo } from '../type/index';
-import { SortParams, SHA256, ConnectStr } from "../utils";
+import { SortParams, SHA256, ConnectStr, HmacSHA256 } from "../utils";
 import { AxiosResponse } from "axios";
 import { ApiResponse, ApiAllVcResult } from '../type';
 import request from "./request";
 
-export const getVcList = async (accountId: string = ''): Promise<any> => {
-  if (!accountId) {
-    throw new Error('No account id');
+export const getVcList = async (accountId: string = '', docType: string): Promise<any> => {
+  if (!accountId || !docType) {
+    throw new Error('Params error');
   }
+  let credentialContext = '';
+  Object.getOwnPropertyNames(CredentialContextType).forEach(function (key) {
+    if (key === docType) {
+      // @ts-ignore
+      credentialContext = CredentialContextType[key]
+    }
+  });
   const { data }: AxiosResponse<ApiResponse<object>> = await request({
-    url: '/v1/credentials/'+accountId,
+    url: '/v1/credentials/' + accountId + '?credential_context=' + credentialContext,
     method: 'GET',
   })
   if (data.error !== 0) {
@@ -34,7 +41,7 @@ export const sendUserInfo = async (params: SendUserInfo, apiKey: string): Promis
   }
   const customParams = SortParams(originParams);
   let str = ConnectStr(customParams);
-  let sign = SHA256(str + apiKey);
+  let sign = HmacSHA256(str, apiKey);
   console.log('params', JSON.stringify({
     ...customParams,
     sign

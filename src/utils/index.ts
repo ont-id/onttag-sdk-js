@@ -1,8 +1,8 @@
+import {decode} from 'base64-url'
 import CryptoJS from 'crypto-js'
-import { decode } from 'base64-url'
 import moment from 'moment';
-import { credentialType, headerType, bodyType, presentationType } from '../type'
-import { Credentials } from 'ontology-ts-sdk'
+import {Credentials} from 'ontology-ts-sdk'
+import {bodyType, chainType, credentialType, headerType, presentationType} from '../type'
 
 export const HmacSHA256 = (message: string, key: string) => {
   return CryptoJS.HmacSHA256(message, key).toString()
@@ -56,12 +56,18 @@ export const serializeParameter = (obj: object): object => {
  * @param account eth account address
  * @returns id string
  */
-export const generateId = (account: string): string => {
+export const generateId = (account: string, chain: chainType): string => {
   if (!account) {
     throw new Error('No account')
   }
   if (account.indexOf('0x') <= -1) {
     throw new Error('Incorrect account format')
+  }
+  if (chain === chainType.BSC) {
+    return 'did:bnb:' + account.substring(2, account.length);
+  }
+  if (chain === chainType.ETH) {
+    return 'did:eth:' + account.substring(2, account.length);
   }
   return 'did:ont:' + account.substring(2, account.length);
 }
@@ -111,7 +117,7 @@ export const deserialize = (JWTStr: string): credentialType => {
  * @returns JWT String
  */
 
-export const createJWTPresentation = (presentation: presentationType): string => {
+export const serializeSignMessage = (presentation: presentationType): string => {
   const { issuer } = deserialize(presentation.jwtStr);
   const verifiablePresentationAttribute = new Credentials.VerifiablePresentationAttribute([presentation.jwtStr]);
   const vpPayload = new Credentials.VpPayload(issuer, verifiablePresentationAttribute, Date.now(), presentation.audienceId, presentation.ownerDid, new Date());

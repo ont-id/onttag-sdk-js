@@ -25,6 +25,10 @@ export enum DocType {
   DrivingLicense = 'driving_license'
 }
 
+export enum chainType {
+  ETH = 'eth',
+  BSC = 'bnb'
+}
 export enum CredentialContextType {
   passport = 'credential:sfp_passport_authentication',
   id_card = 'credential:sfp_idcard_authentication',

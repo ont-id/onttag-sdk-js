@@ -1,4 +1,4 @@
-export const countryList = [
+export const areaList = [
   { name: 'Afghanistan', alias: 'AF' },
   { name: 'Aland Islands', alias: 'AX' },
   { name: 'Albania', alias: 'AL' },
