@@ -1,4 +1,4 @@
-import { CredentialContextType, SendUserInfo } from '../type/index';
+import { CredentialContextType, SendUserInfo } from '../type';
 import { SortParams, SHA256, ConnectStr, HmacSHA256 } from "../utils";
 import { AxiosResponse } from "axios";
 import { ApiResponse, ApiAllVcResult } from '../type';

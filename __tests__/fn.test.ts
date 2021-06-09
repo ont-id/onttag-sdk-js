@@ -21,7 +21,7 @@ describe("test user info", () => {
   test("get user vc", async () => {
     const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     // did:ont:0x5c7b386B2B8779304E701CbBE22a53671446629b
-    const result = await getVcList('did:ont:5c7b386B2B8779304E701CbBE22a53671446629b', DocType.Passport);
+    const result = await getVcList(accountId, DocType.Passport);
     console.log('result', result);
   })
 })

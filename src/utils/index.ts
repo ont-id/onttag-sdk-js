@@ -54,6 +54,7 @@ export const serializeParameter = (obj: object): object => {
 /**
  *
  * @param account eth account address
+ * @param chain chainType data
  * @returns id string
  */
 export const generateId = (account: string, chain: chainType): string => {
@@ -92,7 +93,7 @@ export const deserialize = (JWTStr: string): credentialType => {
   // console.log('arr', arr);
   let header: headerType = JSON.parse(Base64Decode(arr[0]));
   let bodyData: bodyType = JSON.parse(Base64Decode(arr[1]))
-  let result: credentialType = {
+  return {
     "@context": bodyData.vc["@context"],
     id: bodyData.jti,
     type: bodyData.vc.type,
@@ -107,8 +108,7 @@ export const deserialize = (JWTStr: string): credentialType => {
       ...bodyData.vc.proof,
       jws: arr[2]
     }
-  }
-  return result;
+  };
 }
 
 /**
@@ -121,6 +121,5 @@ export const serializeSignMessage = (presentation: presentationType): string => 
   const { issuer } = deserialize(presentation.jwtStr);
   const verifiablePresentationAttribute = new Credentials.VerifiablePresentationAttribute([presentation.jwtStr]);
   const vpPayload = new Credentials.VpPayload(issuer, verifiablePresentationAttribute, Date.now(), presentation.audienceId, presentation.ownerDid, new Date());
-  const serialized = vpPayload.serialize();
-  return serialized;
+  return vpPayload.serialize();
 }
