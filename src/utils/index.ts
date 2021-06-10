@@ -1,8 +1,8 @@
-import {decode} from 'base64-url'
+import { decode, encode } from 'base64-url'
 import CryptoJS from 'crypto-js'
 import moment from 'moment';
-import {Credentials} from 'ontology-ts-sdk'
-import {bodyType, chainType, credentialType, headerType, presentationType} from '../type'
+import { Credentials, Crypto } from 'ontology-ts-sdk'
+import { bodyType, chainType, credentialType, headerType, signMessageType, createPresentationType } from '../type'
 
 export const HmacSHA256 = (message: string, key: string) => {
   return CryptoJS.HmacSHA256(message, key).toString()
@@ -113,13 +113,30 @@ export const deserialize = (JWTStr: string): credentialType => {
 
 /**
  *
- * @param presentation user info include jwt, audience, ownerDid
- * @returns JWT String
+ * @param messageType user info include jwt, audience, ownerDid
+ * @returns JWT String for sign
  */
 
-export const serializeSignMessage = (presentation: presentationType): string => {
-  const { issuer } = deserialize(presentation.jwtStr);
-  const verifiablePresentationAttribute = new Credentials.VerifiablePresentationAttribute([presentation.jwtStr]);
-  const vpPayload = new Credentials.VpPayload(issuer, verifiablePresentationAttribute, Date.now(), presentation.audienceId, presentation.ownerDid, new Date());
-  return vpPayload.serialize();
+export const serializeSignMessage = (messageType: signMessageType): string => {
+  const { issuer } = deserialize(messageType.jwtStr);
+  const verifiablePresentationAttribute = new Credentials.VerifiablePresentationAttribute([messageType.jwtStr]);
+  const vpPayload = new Credentials.VpPayload(issuer, verifiablePresentationAttribute, Date.now(), messageType.audienceId, messageType.ownerDid, new Date(Date.now() + 2592000));
+  const vpPayloadString = vpPayload.serialize();
+  let jwtHeader = new Credentials.JwtHeader(Crypto.SignatureScheme.ECDSAwithSHA256.labelJWS, messageType.ownerDid + '#keys-1');
+  let jwtHeaderString = jwtHeader.serialize(Crypto.SignatureScheme.ECDSAwithSHA256, messageType.ownerDid + '#keys-1');
+  return jwtHeaderString + '.' + vpPayloadString;
 }
+
+/**
+ *
+ * @param createPresentationType object
+ *  signMessage: string Signed metadata,
+ *  signature: string Signature after signing through metamask
+ * @returns Presentation
+ */
+
+export const createPresentation = (presentationType: createPresentationType) => {
+  const signatureJwt = encode(presentationType.signature)
+  return presentationType.signMessage + '.' + signatureJwt;
+}
+

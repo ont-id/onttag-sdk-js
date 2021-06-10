@@ -75,8 +75,13 @@ export interface credentialType {
   proof: proofType
 }
 
-export interface presentationType {
+export interface signMessageType {
   jwtStr: string,
   audienceId: string,
   ownerDid: string
+}
+
+export interface createPresentationType {
+  signMessage: string,
+  signature: string
 }

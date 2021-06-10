@@ -273,3 +273,24 @@ return
 jwt string
 **/
 ```
+
+`createPresentation`
+
+```javascript
+
+import VC from 'xxxx'
+
+/**
+params
+{
+  signMessage: string  //  Signed metadata
+  signature: string    //  Signature after signing through metamask
+}
+**/
+const JWT = VC.utils.createPresentation(params);
+
+/**
+return 
+presentation jwt string
+**/
+```
