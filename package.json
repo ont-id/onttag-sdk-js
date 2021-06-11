@@ -1,7 +1,7 @@
 {
-  "name": "@ericyangchen/npmyangtest",
-  "version": "2.2.4",
-  "description": "npm test package ericyang",
+  "name": "@ont-dev/ont-tag",
+  "version": "0.0.1",
+  "description": "Verifiable Credential Service Integration",
   "license": "MIT",
   "repository": "https://github.com/ErickYangs/npmyangtest.git",
   "main": "lib/index.js",
@@ -12,10 +12,11 @@
     "serve": "webpack serve --mode=development"
   },
   "keywords": [
-    "eric",
-    "yang",
-    "ericyang",
-    "package"
+    "Verifiable Credential Service",
+    "Verifiable",
+    "Credential",
+    "ONT",
+    "TAG"
   ],
   "publishConfig": {
     "access": "public"
