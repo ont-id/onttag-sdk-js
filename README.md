@@ -28,7 +28,7 @@ To use the methods in a browser, you must use the compiled version of the librar
 <script src="./lib/browser.js"></script>
 ```
 
-Everything will now be available under the `VC` variable. For instance, to fetch the list of available countries, you can invoke:
+Everything will now be available under the `VC` variable. For instance, to fetch the list of available regions, you can invoke:
 
 ```js
 var areaList = VC.utils.areaList;
@@ -42,7 +42,7 @@ var areaList = VC.utils.areaList;
 | ----------------------------------------------------- | -------------------------------------------------------------------------------- |
 | [sendUserInfo](#sending-an-authentication-request)    | Sends authentication request to the trust anchor service with user's KYC details |
 | [getVcList](#fetching-the-issued-credential)          | Fetches any issued credentials for previously sent authentication requests       |
-| [utils.areaList](#arealist)                           | Returns a list of countries and thier respective aliases                         |
+| [utils.areaList](#arealist)                           | Returns a list of countries and regions with their respective aliases            |
 | [utils.docType](#doctype)                             | Returns a list of valid KYC document types                                       |
 | [utils.chainType](#chaintype)                         | Returns the list of supported chains                                             |
 | [utils.generateId](#generateid)                       | Generates a valid ONT ID using a wallet addresses                                |
@@ -64,7 +64,7 @@ params // parameters to be passed
   docType: string,  // Document type
   frontDoc: string, // Front page image of the selected document (encoded)
   name: string,     // Legal name as in document
-  ownerDid: string, // DID of the user, generated using the generateId utility method
+  ownerDid: string  // DID of the user, generated using the generateId utility method
 }
 ```
 
@@ -133,7 +133,7 @@ If the authentication was successful, the `encryptOriginData` field will contain
 
 #### `areaList`
 
-Invoking this method returns an array of all the supported countries with their respective aliases.
+Invoking this method returns an array of all the supported countries and regions with their respective aliases.
 
 ```js
 VC.utils.areaList;
@@ -150,7 +150,7 @@ The response is structured as follows.
 ]
 ```
 
-#### `doctype`
+#### `docType`
 
 This method returns the list of accepted document types for authentication as an object.
 
@@ -217,7 +217,7 @@ The parameters are of the following form.
 const JWT = VC.utils.serializeSignMessage(params);
 ```
 
-#### `createJWTPresentation`
+#### `createPresentation`
 
 Invoke this method to generate a presentation with credential data signed by the user. It returns the presentation as a JWT string.
 
