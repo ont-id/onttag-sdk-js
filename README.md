@@ -7,20 +7,19 @@
 You can start with importing the xxx package by running npm command below.
 
 ```js
-// 插件名称待定
-npm i xxx
+npm i @ont-dev/ont-tag
 ```
 
 You can now use the following `import` statement to bring in all the modules from the xxx package.
 
 ```js
-import VC from xxx;
+import VC from '@ont-dev/ont-tag';
 ```
 
 The following `require` statement can also be used to load the modules.
 
 ```js
-var VC = require(xxx);
+var VC = require('@ont-dev/ont-tag');
 ```
 
 To use the methods in a browser, you must use the compiled version of the library. The `browser.js` file is located in the `lib` directory. You can include it in your project using a `script` tag as follows.
