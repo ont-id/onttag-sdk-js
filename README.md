@@ -264,6 +264,7 @@ params
   jwtStr: string, // jwt
   audienceId: string, // pro Id
   ownerDid: string    // user wallet address
+  effectiveTime: number   // Presentation Effective time, eg 1 day = 86400
 }
 **/
 const JWT = VC.utils.serializeSignMessage(params);

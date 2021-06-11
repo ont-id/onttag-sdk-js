@@ -95,7 +95,8 @@ describe("test sign verify message", () => {
     const signMessage: signMessageType = {
       jwtStr,
       audienceId: 'did:ont:AUokgZN93vGemHootneWfuhogShVZCz6nX',
-      ownerDid
+      ownerDid,
+      effectiveTime: 2592000
     }
     const result = serializeSignMessage(signMessage);
     console.log('result', result);

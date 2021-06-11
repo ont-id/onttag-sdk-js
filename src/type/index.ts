@@ -78,7 +78,8 @@ export interface credentialType {
 export interface signMessageType {
   jwtStr: string,
   audienceId: string,
-  ownerDid: string
+  ownerDid: string,
+  effectiveTime: number
 }
 
 export interface createPresentationType {
