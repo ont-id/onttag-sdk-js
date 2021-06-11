@@ -11,7 +11,7 @@ export interface ApiAllVcResult {
 export interface SendUserInfo {
   appId: string,
   backDoc: string,
-  country: string,
+  region: string,
   docId: string,
   docType: string,
   frontDoc: string,

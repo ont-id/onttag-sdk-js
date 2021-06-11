@@ -47,7 +47,7 @@ var areaList = VC.utils.areaList;
 | [utils.chainType](#chaintype)                         | Returns the list of supported chains                                             |
 | [utils.generateId](#generateid)                       | Generates a valid ONT ID using a wallet addresses                                |
 | [utils.serializeSignMessage](#serializesignmessage)   | Serializes the passed object data to generate a `base64` string                  |
-| [utils.createJWTPresentation](#createjwtpresentation) | Generates a presentation for the passed credential data payload                  |
+| [utils.createPresentation](#createresentation)        | Generates a presentation for the passed credential data payload                  |
 | [utils.deserialize](#deserialize)                     | Deserializes the passed `base64` string to an object                             |
 
 ### Sending an Authentication Request
@@ -59,7 +59,7 @@ params // parameters to be passed
 {
   appId: string,    // Application ID, assigned by Ontology
   backDoc: string,  // Last page image of the selected document (encoded)
-  country: string,  // Nationality (country alias)
+  region: string,  // Nationality (area alias)
   docId: string,    // Document ID no.
   docType: string,  // Document type
   frontDoc: string, // Front page image of the selected document (encoded)
@@ -70,7 +70,7 @@ params // parameters to be passed
 
 > **Note:** Both the `frontDoc` and `backDoc` images need to be passed as `base64` encoded strings.
 
-The `country` field takes the respective alias for each country. Use the [`areaList`](#arealist) utility method to obtain the list of countries and their aliases.
+The `region` field takes the respective alias for each region. Use the [`areaList`](#arealist) utility method to obtain the list of countries and their aliases.
 
 The `ownerDid` field takes an ONT ID. You can generate one using the [`generateId`](#generateid) utility method.
 
@@ -236,7 +236,7 @@ The parameter object is of the following form.
 ```
 
 ```js
-const JWT = VC.utils.createJWTPresentation(params);
+const JWT = VC.utils.createPresentation(params);
 ```
 
 Presentation data can be obtained by deserializing this token. You can perform signature verification and message decryption using the Java SDK. Follow this [link]() for reference.

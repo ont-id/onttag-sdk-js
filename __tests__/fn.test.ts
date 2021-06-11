@@ -12,7 +12,7 @@ import {
   createPresentation
 } from "../src/utils";
 import { areaList } from "../src/utils/country";
-import { userInfo } from './info'
+import { userInfo } from './info';
 
 describe("test user info", () => {
   test("send user info", async () => {
