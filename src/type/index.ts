@@ -83,6 +83,6 @@ export interface signMessageType {
 }
 
 export interface createPresentationType {
-  signMessage: string,
+  originMessage: string,
   signature: string
 }
