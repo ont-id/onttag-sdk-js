@@ -12,6 +12,10 @@
     "serve": "webpack serve --mode=development"
   },
   "keywords": [
+    "ontology",
+    "typescript",
+    "sdk",
+    "did",
     "Verifiable Credential Service",
     "Verifiable",
     "Credential",
