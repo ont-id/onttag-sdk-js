@@ -4,13 +4,13 @@
 
 ## Installation
 
-You can start with importing the xxx package by running npm command below.
+You can start with importing the `@ont-dev/ont-tag` package by running npm command below.
 
 ```js
 npm i @ont-dev/ont-tag
 ```
 
-You can now use the following `import` statement to bring in all the modules from the xxx package.
+You can now use the following `import` statement to bring in all the modules from the `@ont-dev/ont-tag` package.
 
 ```js
 import VC from '@ont-dev/ont-tag';
