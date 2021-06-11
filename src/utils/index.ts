@@ -136,7 +136,8 @@ export const serializeSignMessage = (messageType: signMessageType): string => {
  */
 
 export const createPresentation = (presentationType: createPresentationType) => {
-  const signatureJwt = encode(presentationType.signature)
+  const signatureJwt = encode(presentationType.signature,'utf-8')
+  console.log('signatureJwt', signatureJwt);
   return presentationType.signMessage + '.' + signatureJwt;
 }
 

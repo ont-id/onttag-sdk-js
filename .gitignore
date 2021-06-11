@@ -29,4 +29,4 @@ yarn-error.log*
 /dist/*
 /dist
 
-/__tests/__/info.ts
+/__tests__/info.ts
