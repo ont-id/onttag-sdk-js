@@ -151,10 +151,9 @@ describe("make presentation", () => {
       ownerDid,
       effectiveTime: 2592000
     }
-    const { originMessage, signMessage } = serializeSignMessage(serializeMessage);
+    const originMessage = serializeSignMessage(serializeMessage);
     console.log('originMessage', originMessage);
-    console.log('signMessage', signMessage);
-    const { signature } = await web3.eth.accounts.sign(signMessage, '57aa4b1fa4f1bc6824d8ed3cea202b4753e0734ccd94a4a7ba941a3f46739cce');
+    const { signature } = await web3.eth.accounts.sign(originMessage, '57aa4b1fa4f1bc6824d8ed3cea202b4753e0734ccd94a4a7ba941a3f46739cce');
     console.log('signature', signature);
     let presentation = createPresentation({
       originMessage,

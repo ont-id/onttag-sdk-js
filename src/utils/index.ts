@@ -1,8 +1,15 @@
-import { decode, encode } from 'base64-url'
+import {decode, encode} from 'base64-url'
 import CryptoJS from 'crypto-js'
 import moment from 'moment';
-import { Credentials, Crypto } from 'ontology-ts-sdk'
-import { bodyType, chainType, credentialType, headerType, signMessageType, createPresentationType } from '../type'
+import {Credentials, Crypto} from 'ontology-ts-sdk'
+import {
+  bodyType,
+  chainType,
+  createPresentationType,
+  credentialType,
+  headerType,
+  signMessageType
+} from '../type'
 
 export const HmacSHA256 = (message: string, key: string) => {
   return CryptoJS.HmacSHA256(message, key).toString()
@@ -124,12 +131,7 @@ export const serializeSignMessage = (messageType: signMessageType) => {
   const vpPayloadString = vpPayload.serialize();
   let jwtHeader = new Credentials.JwtHeader(Crypto.SignatureScheme.ECDSAwithSHA256.labelJWS, messageType.ownerDid + '#keys-1');
   let jwtHeaderString = jwtHeader.serialize(Crypto.SignatureScheme.ECDSAwithSHA256, messageType.ownerDid + '#keys-1');
-  const originMessage =  jwtHeaderString + '.' + vpPayloadString;
-  const signMessage = SHA256(originMessage);
-  return {
-    originMessage,
-    signMessage
-  }
+  return jwtHeaderString + '.' + vpPayloadString
 }
 
 /**
