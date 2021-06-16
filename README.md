@@ -52,7 +52,7 @@ var areaList = VC.utils.areaList;
 
 ### Sending an Authentication Request
 
-This method is used to send data authentication requests for a user's KYC data. It takes two parameters. The first one is an object literal with the KYC info. as defined below, and the second one is your API key.
+This method is used to send authentication requests for a user's KYC data. It takes two parameters. The first one is an object literal with the KYC info. as defined below, and the second one is your API key.
 
 ```js
 params // parameters to be passed
