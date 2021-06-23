@@ -47,7 +47,7 @@ var areaList = VC.utils.areaList;
 | [utils.chainType](#chaintype)                         | Returns the list of supported chains                                             |
 | [utils.generateId](#generateid)                       | Generates a valid ONT ID using a wallet addresses                                |
 | [utils.serializeSignMessage](#serializesignmessage)   | Serializes the passed object data to generate a `base64` string                  |
-| [utils.createPresentation](#createresentation)        | Generates a presentation for the passed credential data payload                  |
+| [utils.createPresentation](#createpresentation)        | Generates a presentation for the passed credential data payload                  |
 | [utils.deserialize](#deserialize)                     | Deserializes the passed `base64` string to an object                             |
 
 ### Sending an Authentication Request
