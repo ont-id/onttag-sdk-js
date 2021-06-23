@@ -125,7 +125,7 @@ If the authentication was successful, the `encryptOriginData` field will contain
 |   2    | Authentication failed     |
 |   0    | Verification in progress  |
 
-> **Note:** The user needs to sign this data to authorize access. After fetching the credential data, you can proceed with generating a presentation with signed credential data as its payload. The resultant token can then be deserialized to fetch the verified data next time it is accessed.
+> **Note:** The user needs to sign this data to authorize access and prove their relationship with the credential data. After fetching the credential data, you can proceed with generating a presentation with the signed credential data as its payload. The resultant token can then be used for signature verification and access control.
 
 ### Utility Methods
 
@@ -158,7 +158,7 @@ This method returns the list of accepted document types for authentication as an
 VC.utils.docType;
 ```
 
-The reponse if of the following form.
+The response is of the following form.
 
 ```js
 {
