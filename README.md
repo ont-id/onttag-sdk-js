@@ -1,4 +1,4 @@
-[ English | [中文]() ]
+[ English | [中文](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README-cn.md) ]
 
 # Verification via DID Verifiable Credentials Service Integration
 
@@ -47,12 +47,12 @@ var areaList = VC.utils.areaList;
 | [utils.chainType](#chaintype)                         | Returns the list of supported chains                                             |
 | [utils.generateId](#generateid)                       | Generates a valid ONT ID using a wallet addresses                                |
 | [utils.serializeSignMessage](#serializesignmessage)   | Serializes the passed object data to generate a `base64` string                  |
-| [utils.createPresentation](#createresentation)        | Generates a presentation for the passed credential data payload                  |
+| [utils.createPresentation](#createpresentation)        | Generates a presentation for the passed credential data payload                  |
 | [utils.deserialize](#deserialize)                     | Deserializes the passed `base64` string to an object                             |
 
 ### Sending an Authentication Request
 
-This method is used to send data authentication requests for a user's KYC data. It takes two parameters. The first one is an object literal with the KYC info. as defined below, and the second one is your API key.
+This method is used to send authentication requests for a user's KYC data. It takes two parameters. The first one is an object literal with the KYC info. as defined below, and the second one is your API key.
 
 ```js
 params // parameters to be passed
@@ -125,7 +125,7 @@ If the authentication was successful, the `encryptOriginData` field will contain
 |   2    | Authentication failed     |
 |   0    | Verification in progress  |
 
-> **Note:** The user needs to sign this data to authorize access. After fetching the credential data, you can proceed with generating a presentation with signed credential data as its payload. The resultant token can then be deserialized to fetch the verified data next time it is accessed.
+> **Note:** The user needs to sign this data to authorize access and prove their relationship with the credential data. After fetching the credential data, you can proceed with generating a presentation with the signed credential data as its payload. The resultant token can then be used for signature verification and access control.
 
 ### Utility Methods
 
@@ -158,7 +158,7 @@ This method returns the list of accepted document types for authentication as an
 VC.utils.docType;
 ```
 
-The reponse if of the following form.
+The response is of the following form.
 
 ```js
 {
@@ -180,7 +180,7 @@ The response is as follows.
 
 ```js
 {
-  ETH: 'eth',
+  ETH: 'etho',
   BSC: 'bnb'
 }
 ```
