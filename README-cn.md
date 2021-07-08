@@ -4,13 +4,11 @@
 
 ## 安装
 
-首先运行 nmp 命令并导入 `@ont-dev/ont-tag` 包。
-
 ```js
 npm i @ont-dev/ont-tag
 ```
 
-然后通过下面的 `import` 语句导入 `@ont-dev/ont-tag` 包中的模块。
+## 导入
 
 ```js
 import VC from '@ont-dev/ont-tag';
@@ -22,7 +20,7 @@ import VC from '@ont-dev/ont-tag';
 var VC = require('@ont-dev/ont-tag');
 ```
 
-在浏览器中使用包中的方法时需要使用编译后的库。`browser.js` 文件在 `lib` 目录下，可以通过 `script` 标签来加入和使用：
+在浏览器中使用包中的方法时需要使用编译后的库。`browser.js` 文件在 `lib` 目录下：
 
 ```js
 <script src="./lib/browser.js"></script>
@@ -70,11 +68,11 @@ params // 待传参数
 
 > **注意：** `frontDoc` 和 `backDoc` 图片需作为 `base64` 编码后生成的字符串传入。
 
-`region` 字段对应地区的代号。通过 utility 方法 [`areaList`](#arealist) 可以获取国家及对应代号列表。
+`region` 字段对应地区的代号。通过 `utils` 方法 [`areaList`](#arealist) 可以获取国家及对应代号列表。
 
-`ownerDid` 字段对应一个 ONT ID，可以通过 utility 方法 [`generateId`](#generateid) 生成。
+`ownerDid` 字段对应一个 ONT ID，可以通过 `utils` 方法 [`generateId`](#generateid) 生成。
 
-`docType` 字段描述身份认证所需文件的类型。通过 [`docType`](#doctype) utility 方法可以获取所有支持身份认证的文件类型。
+`docType` 字段描述身份认证所需文件的类型。通过 [`docType`](#doctype) `utils` 方法可以获取所有支持身份认证的文件类型。
 
 使用用户信息和 API key 调用此方法来发送身份认证请求：
 
@@ -180,7 +178,7 @@ VC.utils.chainType;
 
 ```js
 {
-  ETH: 'eth',
+  ETH: 'etho',
   BSC: 'bnb'
 }
 ```
@@ -198,7 +196,7 @@ const ownerDid = VC.utils.generateId("0xdc6...974a9", chainType);
 传入以下参数调用本方法可以返回通过 `base64` 序列化后的 JWT 字符串：
 
 1. `jwtStr` - 凭证的 JWT 字符串
-2. `audienceId` - 凭证验证者的 DID 
+2. `audienceId` - 凭证使用者的 DID 
 3. `ownerDid` - 凭证所有者的 DID 
 4. `effectiveTime` - 展示有效时长（秒数），例如 1 天 = 86400 
 
