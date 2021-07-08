@@ -180,7 +180,7 @@ The response is as follows.
 
 ```js
 {
-  ETH: 'eth',
+  ETH: 'etho',
   BSC: 'bnb'
 }
 ```
