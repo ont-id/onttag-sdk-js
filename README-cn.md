@@ -72,7 +72,7 @@ params // 待传参数
 
 `ownerDid` 字段对应一个 ONT ID，可以通过 `utils` 方法 [`generateId`](#generateid) 生成。
 
-`docType` 字段描述身份认证所需文件的类型。通过 [`docType`](#doctype) `utils` 方法可以获取所有支持身份认证的文件类型。
+`docType` 字段描述身份认证所需文件的类型。通过 `utils` 方法 [`docType`](#doctype) 可以获取所有支持身份认证的文件类型。
 
 使用用户信息和 API key 调用此方法来发送身份认证请求：
 
