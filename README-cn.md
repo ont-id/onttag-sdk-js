@@ -1,3 +1,5 @@
+[ English | [中文](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README-cn.md) ]
+
 # DID 可验证声明验证服务对接
 
 ## 安装
