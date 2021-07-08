@@ -1,4 +1,4 @@
-[ English | [中文]() ]
+[ English | [中文](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README-cn.md) ]
 
 # Verification via DID Verifiable Credentials Service Integration
 
