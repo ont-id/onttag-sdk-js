@@ -1,6 +1,6 @@
 {
   "name": "@ont-dev/ont-tag",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Verifiable Credential Service Integration",
   "license": "MIT",
   "repository": "https://github.com/ontology-tech/ont-tag-ts-sdk.git",

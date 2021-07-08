@@ -26,7 +26,7 @@ export enum DocType {
 }
 
 export enum chainType {
-  ETH = 'eth',
+  ETH = 'etho',
   BSC = 'bnb'
 }
 export enum CredentialContextType {
