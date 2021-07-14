@@ -1,4 +1,4 @@
-import { CredentialContextType, SendUserInfo } from '../type';
+import { CredentialContextType, SendUserInfo, } from '../type';
 import { SortParams, SHA256, ConnectStr, HmacSHA256 } from "../utils";
 import { AxiosResponse } from "axios";
 import { ApiResponse, ApiAllVcResult } from '../type';
@@ -66,4 +66,18 @@ export const sendUserInfo = async (params: SendUserInfo, apiKey: string): Promis
     console.log(JSON.stringify(e))
     throw new Error(e)
   }
+}
+
+export const getSocialAuthLink = (accountId: string = '', docType: string) => {
+  if (!accountId || !docType) {
+    throw new Error('Params error');
+  }
+  let credentialContext = '';
+  Object.getOwnPropertyNames(CredentialContextType).forEach(function (key) {
+    if (key === docType) {
+      // @ts-ignore
+      credentialContext = CredentialContextType[key]
+    }
+  });
+  return `http://localhost:8080?context=${credentialContext}&ontid=${accountId}&lang=en_us`
 }

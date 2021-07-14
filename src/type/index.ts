@@ -22,7 +22,9 @@ export interface SendUserInfo {
 export enum DocType {
   Passport = 'passport',
   IdCard = 'id_card',
-  DrivingLicense = 'driving_license'
+  DrivingLicense = 'driving_license',
+  Twitter = 'twitter',
+  Github = 'github'
 }
 
 export enum chainType {
@@ -32,7 +34,9 @@ export enum chainType {
 export enum CredentialContextType {
   passport = 'credential:sfp_passport_authentication',
   id_card = 'credential:sfp_idcard_authentication',
-  driving_license = 'credential:sfp_dl_authentication'
+  driving_license = 'credential:sfp_dl_authentication',
+  twitter = 'credential:twitter_authentication',
+  github = 'credential:github_authentication'
 }
 
 export interface proofType {

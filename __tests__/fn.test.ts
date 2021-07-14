@@ -1,8 +1,8 @@
 import { Claim, Credentials, Crypto } from 'ontology-ts-sdk'
 import Web3 from 'web3';
 import moment from 'moment';
-import { getVcList, sendUserInfo } from "../src/api";
-import { chainType, DocType, signMessageType } from '../src/type/index'
+import {getSocialAuthLink, getVcList, sendUserInfo} from "../src/api";
+import {chainType, DocType, signMessageType} from '../src/type/index'
 import {
   Base64Decode,
   deserialize,
@@ -160,5 +160,12 @@ describe("make presentation", () => {
       signature
     });
     console.log('presentation', presentation);
+  })
+})
+
+describe("SocialAuth", () => {
+  test("getSocialAuthLink", () => {
+    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    console.log('link: ', getSocialAuthLink(accountId, DocType.Twitter))
   })
 })
