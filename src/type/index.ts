@@ -13,21 +13,21 @@ export interface SendUserInfo {
   backDoc: string,
   region: string,
   docId: string,
-  docType: string,
+  authType: string,
   frontDoc: string,
   name: string,
   ownerDid: string,
 }
 
-export enum DocType {
+export enum AuthType {
   Passport = 'passport',
   IdCard = 'id_card',
   DrivingLicense = 'driving_license',
   Twitter = 'twitter',
   Github = 'github',
-  Linked = 'linked',
+  Linkedin = 'linkedin',
   Line = 'line',
-  Amzon = 'amzon',
+  Amazon = 'amazon',
   Kakao = 'kakao'
 }
 
@@ -41,9 +41,9 @@ export enum CredentialContextType {
   driving_license = 'credential:sfp_dl_authentication',
   twitter = 'credential:twitter_authentication',
   github = 'credential:github_authentication',
-  linked = 'credential:linkedin_authentication',
+  linkedin = 'credential:linkedin_authentication',
   line = 'credential:line_authentication',
-  amzon = 'credential:amazon_authentication',
+  amazon = 'credential:amazon_authentication',
   kakao = 'credential:kakao_authentication'
 }
 

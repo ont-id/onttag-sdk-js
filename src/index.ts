@@ -1,4 +1,4 @@
-import { DocType, chainType } from "./type";
+import { AuthType, chainType } from "./type";
 import { sendUserInfo, getVcList, getSocialAuthLink } from "./api";
 import { deserialize, generateId, serializeSignMessage, createPresentation, } from './utils'
 import { areaList } from './utils/country'
@@ -8,7 +8,7 @@ const utils = {
   generateId,
   areaList,
   serializeSignMessage,
-  docType: DocType,
+  authType: AuthType,
   chainType,
   createPresentation,
   getSocialAuthLink

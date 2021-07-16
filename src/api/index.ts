@@ -4,13 +4,13 @@ import { AxiosResponse } from "axios";
 import { ApiResponse, ApiAllVcResult } from '../type';
 import request from "./request";
 
-export const getVcList = async (accountId: string = '', docType: string): Promise<any> => {
-  if (!accountId || !docType) {
+export const getVcList = async (accountId: string = '', authType: string): Promise<any> => {
+  if (!accountId || !authType) {
     throw new Error('Params error');
   }
   let credentialContext = '';
   Object.getOwnPropertyNames(CredentialContextType).forEach(function (key) {
-    if (key === docType) {
+    if (key === authType) {
       // @ts-ignore
       credentialContext = CredentialContextType[key]
     }
@@ -30,7 +30,7 @@ export const getVcList = async (accountId: string = '', docType: string): Promis
 export const sendUserInfo = async (params: SendUserInfo, apiKey: string): Promise<boolean> => {
   let credentialContext = '';
   Object.getOwnPropertyNames(CredentialContextType).forEach(function (key) {
-    if (key === params.docType) {
+    if (key === params.authType) {
       // @ts-ignore
       credentialContext = CredentialContextType[key]
     }
@@ -68,16 +68,16 @@ export const sendUserInfo = async (params: SendUserInfo, apiKey: string): Promis
   }
 }
 
-export const getSocialAuthLink = (accountId: string = '', docType: string, apiKey: string, appId: string) => {
-  if (!accountId || !docType) {
+export const getSocialAuthLink = (ownerDid: string = '', authType: string, apiKey: string, appId: string) => {
+  if (!ownerDid || !authType) {
     throw new Error('Params error');
   }
   let credentialContext = '';
   Object.getOwnPropertyNames(CredentialContextType).forEach(function (key) {
-    if (key === docType) {
+    if (key === authType) {
       // @ts-ignore
       credentialContext = CredentialContextType[key]
     }
   });
-  return `http://128.1.40.156:8067?context=${credentialContext}&ontid=${accountId}&apiKey=${apiKey}&appId=${appId}&lang=en_us`
+  return `http://128.1.40.156:8067?context=${credentialContext}&ontid=${ownerDid}&apiKey=${apiKey}&appId=${appId}&lang=en_us`
 }
