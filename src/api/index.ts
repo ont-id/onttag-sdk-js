@@ -79,5 +79,5 @@ export const getSocialAuthLink = (accountId: string = '', docType: string, apiKe
       credentialContext = CredentialContextType[key]
     }
   });
-  return `http://128.1.40.156:8067?context=${credentialContext}&ontid=${accountId}&apiKey=${apiKey}&appId=${appId}lang=en_us`
+  return `http://128.1.40.156:8067?context=${credentialContext}&ontid=${accountId}&apiKey=${apiKey}&appId=${appId}&lang=en_us`
 }
