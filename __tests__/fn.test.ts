@@ -4,7 +4,7 @@ import * as base58 from 'base-58';
 import Web3 from 'web3';
 import moment from 'moment';
 import {getSocialAuthLink, getVcList, sendUserInfo} from "../src/api";
-import {chainType, DocType, signMessageType} from '../src/type/index'
+import {AuthType, chainType, signMessageType} from '../src/type/index'
 import {
   Base64Decode,
   deserialize,
@@ -27,7 +27,7 @@ describe("test user info", () => {
     // const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     // did:ont:0x5c7b386B2B8779304E701CbBE22a53671446629b
     const accountId = 'did:eth:5c7b386B2B8779304E701CbBE22a53671446629'
-    const result = await getVcList(accountId, DocType.Twitter);
+    const result = await getVcList(accountId, AuthType.Twitter);
     console.log('result', result);
   })
 })
@@ -42,8 +42,15 @@ describe("test country list", () => {
     const decoded = base58.decode('AUokgZN93vGemHootneWfuhogShVZCz6nX');
     const hexEncoded =  utils.ab2hexstring(decoded).substr(2, 40);
     console.log('hexEncoded', hexEncoded)
-   const result =  Web3.utils.toHex('AUokgZN93vGemHootneWfuhogShVZCz6nX')
-    console.log('result', result)
+
+    const ADDR_VERSION = '17';
+    const data = ADDR_VERSION + hexEncoded;
+    const hash = utils.sha256(data);
+    const hash2 = utils.sha256(hash);
+    const checksum = hash2.slice(0, 8);
+    const datas = data + checksum;
+    const ontAddress = base58.encode(new Buffer(datas, 'hex'));
+    console.log('ontAddress', ontAddress)
   })
 })
 
@@ -179,6 +186,6 @@ describe("make presentation", () => {
 describe("SocialAuth", () => {
   test("getSocialAuthLink", () => {
     const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
-    console.log('link: ', getSocialAuthLink(accountId, DocType.Amazon, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
+    console.log('link: ', getSocialAuthLink(accountId, AuthType.Amazon, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
   })
 })
