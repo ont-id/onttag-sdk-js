@@ -1,8 +1,10 @@
-import { Claim, Credentials, Crypto } from 'ontology-ts-sdk'
+import { Claim, Credentials, Crypto, utils } from 'ontology-ts-sdk'
+// @ts-ignore
+import * as base58 from 'base-58';
 import Web3 from 'web3';
 import moment from 'moment';
-import { getVcList, sendUserInfo } from "../src/api";
-import { chainType, DocType, signMessageType } from '../src/type/index'
+import {getSocialAuthLink, getVcList, sendUserInfo} from "../src/api";
+import {chainType, DocType, signMessageType} from '../src/type/index'
 import {
   Base64Decode,
   deserialize,
@@ -22,9 +24,10 @@ describe("test user info", () => {
     console.log('result', result)
   }, 30000)
   test("get user vc", async () => {
-    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    // const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     // did:ont:0x5c7b386B2B8779304E701CbBE22a53671446629b
-    const result = await getVcList(accountId, DocType.Passport);
+    const accountId = 'did:eth:5c7b386B2B8779304E701CbBE22a53671446629'
+    const result = await getVcList(accountId, DocType.Twitter);
     console.log('result', result);
   })
 })
@@ -33,7 +36,17 @@ describe("test country list", () => {
   test("produce all dessert", () => {
     console.log(areaList);
   })
+  test("test address to hex", () => {
+   //  AUokgZN93vGemHootneWfuhogShVZCz6nX
+   //  utils.ab2hexstring()
+    const decoded = base58.decode('AUokgZN93vGemHootneWfuhogShVZCz6nX');
+    const hexEncoded =  utils.ab2hexstring(decoded).substr(2, 40);
+    console.log('hexEncoded', hexEncoded)
+   const result =  Web3.utils.toHex('AUokgZN93vGemHootneWfuhogShVZCz6nX')
+    console.log('result', result)
+  })
 })
+
 
 describe("test hmac fn", () => {
   test("HmacSHA256", () => {
@@ -160,5 +173,12 @@ describe("make presentation", () => {
       signature
     });
     console.log('presentation', presentation);
+  })
+})
+
+describe("SocialAuth", () => {
+  test("getSocialAuthLink", () => {
+    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    console.log('link: ', getSocialAuthLink(accountId, DocType.Twitter, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
   })
 })
