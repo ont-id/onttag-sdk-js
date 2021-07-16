@@ -68,7 +68,7 @@ export const sendUserInfo = async (params: SendUserInfo, apiKey: string): Promis
   }
 }
 
-export const getSocialAuthLink = (accountId: string = '', docType: string) => {
+export const getSocialAuthLink = (accountId: string = '', docType: string, apiKey: string, appId: string) => {
   if (!accountId || !docType) {
     throw new Error('Params error');
   }
@@ -79,5 +79,5 @@ export const getSocialAuthLink = (accountId: string = '', docType: string) => {
       credentialContext = CredentialContextType[key]
     }
   });
-  return `http://localhost:8080?context=${credentialContext}&ontid=${accountId}&lang=en_us`
+  return `http://128.1.40.156:8067?context=${credentialContext}&ontid=${accountId}&apiKey=${apiKey}&appId=${appId}lang=en_us`
 }

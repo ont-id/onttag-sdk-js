@@ -24,7 +24,11 @@ export enum DocType {
   IdCard = 'id_card',
   DrivingLicense = 'driving_license',
   Twitter = 'twitter',
-  Github = 'github'
+  Github = 'github',
+  Linked = 'linked',
+  Line = 'line',
+  Amzon = 'amzon',
+  Kakao = 'kakao'
 }
 
 export enum chainType {
@@ -36,7 +40,11 @@ export enum CredentialContextType {
   id_card = 'credential:sfp_idcard_authentication',
   driving_license = 'credential:sfp_dl_authentication',
   twitter = 'credential:twitter_authentication',
-  github = 'credential:github_authentication'
+  github = 'credential:github_authentication',
+  linked = 'credential:linkedin_authentication',
+  line = 'credential:line_authentication',
+  amzon = 'credential:amazon_authentication',
+  kakao = 'credential:kakao_authentication'
 }
 
 export interface proofType {

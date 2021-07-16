@@ -94,6 +94,26 @@ It returns `true` for a successful request and an error message if an exception 
 
 > **Note:** Each application (identified with the combination of their appid and API key) is limited to sending 10 requests for a user's particular document (identified with a user's DID context). Also, in case of an internal error, please get in touch with the Ontology team.
 
+
+
+获取社交认证链接
+
+```javascript
+/**
+accountId, docType, apiKey, appId
+*/
+
+getSocialAuthLink(accountId, docType, apiKey, appId)
+
+
+retutn
+url: string  // SocialLink
+```
+
+
+
+
+
 ### Fetching the Issued Credential
 
 You can use this method to fetch the credential data for a user after having sent a data authentication request.
@@ -164,7 +184,13 @@ The response is of the following form.
 {
   Passport: 'passport',
   IdCard: 'id_card',
-  DrivingLicense: 'driving_license'
+  DrivingLicense: 'driving_license',
+  Twitter = 'twitter',
+  Github = 'github',
+  Linked = 'linked',
+  Line = 'line',
+  Amzon = 'amzon',
+  Kakao = 'kakao'
 }
 ```
 
