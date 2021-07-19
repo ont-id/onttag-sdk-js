@@ -1,4 +1,4 @@
-[ [English](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README.md) | 中文 
+[ [English](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README.md) | 中文 ]
 
 # DID 可验证声明验证服务对接
 
