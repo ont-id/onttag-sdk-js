@@ -75,7 +75,7 @@ export const generateId = (account: string, chain: chainType): string => {
     return 'did:bnb:' + account.substring(2, account.length);
   }
   if (chain === chainType.ETH) {
-    return 'did:eth:' + account.substring(2, account.length);
+    return 'did:etho:' + account.substring(2, account.length);
   }
   return 'did:ont:' + account.substring(2, account.length);
 }

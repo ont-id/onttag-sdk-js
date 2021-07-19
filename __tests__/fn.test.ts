@@ -1,8 +1,10 @@
-import { Claim, Credentials, Crypto } from 'ontology-ts-sdk'
+import { Claim, Credentials, Crypto, utils } from 'ontology-ts-sdk'
+// @ts-ignore
+import * as base58 from 'base-58';
 import Web3 from 'web3';
 import moment from 'moment';
-import { getVcList, sendUserInfo } from "../src/api";
-import { chainType, DocType, signMessageType } from '../src/type/index'
+import {getSocialAuthLink, getVcList, sendUserInfo} from "../src/api";
+import {chainType, DocType, signMessageType} from '../src/type/index'
 import {
   Base64Decode,
   deserialize,
@@ -22,9 +24,10 @@ describe("test user info", () => {
     console.log('result', result)
   }, 30000)
   test("get user vc", async () => {
-    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    // const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     // did:ont:0x5c7b386B2B8779304E701CbBE22a53671446629b
-    const result = await getVcList(accountId, DocType.Passport);
+    const accountId = 'did:eth:5c7b386B2B8779304E701CbBE22a53671446629'
+    const result = await getVcList(accountId, DocType.Twitter);
     console.log('result', result);
   })
 })
@@ -33,7 +36,17 @@ describe("test country list", () => {
   test("produce all dessert", () => {
     console.log(areaList);
   })
+  test("test address to hex", () => {
+   //  AUokgZN93vGemHootneWfuhogShVZCz6nX
+   //  utils.ab2hexstring()
+    const decoded = base58.decode('AUokgZN93vGemHootneWfuhogShVZCz6nX');
+    const hexEncoded =  utils.ab2hexstring(decoded).substr(2, 40);
+    console.log('hexEncoded', hexEncoded)
+   const result =  Web3.utils.toHex('AUokgZN93vGemHootneWfuhogShVZCz6nX')
+    console.log('result', result)
+  })
 })
+
 
 describe("test hmac fn", () => {
   test("HmacSHA256", () => {
@@ -143,7 +156,7 @@ describe("test Credentials", () => {
 describe("make presentation", () => {
   test("presentation fn", async () => {
     const web3 = new Web3(Web3.givenProvider);
-    const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    const ownerDid = generateId('0xCb45c3C4b6ED950070E6F90aA5381bdBD07D98CD', chainType.ETH);
     let encryptOriginData = 'eyJhbGciOiJFUzI1NiIsImtpZCI6ImRpZDpvbnQ6QVBjOEZCZEdZZHpEdFdyRnA4cTJCU1VGWDJIQW5CdUJuYSNrZXlzLTEiLCJ0eXAiOiJKV1QifQ==.eyJpc3MiOiJkaWQ6b250OkFQYzhGQmRHWWR6RHRXckZwOHEyQlNVRlgySEFuQnVCbmEiLCJleHAiOjE2NTQ5NDE5MjksIm5iZiI6MTYyMzQwNTkyOSwiaWF0IjoxNjIzNDA1OTI5LCJqdGkiOiJ1cm46dXVpZDphOGEzYjQ2Yi00ZmQ0LTQ4MmQtOTlhMy03OTg5MTdiYzk3MDQiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vb250aWQub250LmlvL2NyZWRlbnRpYWxzL3YxIiwiY3JlZGVudGlhbDpzZnBfcGFzc3BvcnRfYXV0aGVudGljYXRpb24iXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCJdLCJjcmVkZW50aWFsU3ViamVjdCI6eyJOYW1lIjoiSFNVQU4gWUFORyIsIkJpcnRoRGF5IjoiMTk5NC0wMy0wOSIsIkV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMy0xMiIsIklERG9jTnVtYmVyIjoiRU0yNjAzODYiLCJJc3N1ZXJOYW1lIjoiU2h1ZnRpcHJvIiwidXNlcl9kaWQiOiJkaWQ6ZXRoOjVjN2IzODZCMkI4Nzc5MzA0RTcwMUNiQkUyMmE1MzY3MTQ0NjYyOWIifSwiY3JlZGVudGlhbFN0YXR1cyI6eyJpZCI6IjY1ZDM1NzdjZWVmZTBlNjgwMDVmZmEzNTA1NjhjNzUyYTgyMjllNjAiLCJ0eXBlIjoiQXR0ZXN0Q29udHJhY3QifSwicHJvb2YiOnsiY3JlYXRlZCI6IjIwMjEtMDYtMTFUMTA6MDU6MjlaIiwicHJvb2ZQdXJwb3NlIjoiYXNzZXJ0aW9uTWV0aG9kIn19fQ==.Ac/7tyOuhCEtYzEg/In6VYCpHmhiCzizvCNsgW9R3HyBJI/S9jK74xvuddL+tNQo5GRLQORBsYq0Gqv0OrLzV0Y='
     const serializeMessage: signMessageType = {
       jwtStr: encryptOriginData,
@@ -160,5 +173,12 @@ describe("make presentation", () => {
       signature
     });
     console.log('presentation', presentation);
+  })
+})
+
+describe("SocialAuth", () => {
+  test("getSocialAuthLink", () => {
+    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+    console.log('link: ', getSocialAuthLink(accountId, DocType.Amzon, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
   })
 })

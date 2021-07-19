@@ -1,5 +1,5 @@
 import { DocType, chainType } from "./type";
-import { sendUserInfo, getVcList } from "./api";
+import { sendUserInfo, getVcList, getSocialAuthLink } from "./api";
 import { deserialize, generateId, serializeSignMessage, createPresentation, } from './utils'
 import { areaList } from './utils/country'
 
@@ -10,7 +10,8 @@ const utils = {
   serializeSignMessage,
   docType: DocType,
   chainType,
-  createPresentation
+  createPresentation,
+  getSocialAuthLink
 }
 export {
   sendUserInfo,
