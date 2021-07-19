@@ -1,28 +1,26 @@
-[ English | [中文](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README-cn.md) ]
+[ [English](https://github.com/ontology-tech/ont-tag-ts-sdk/blob/master/README.md) | 中文 
 
 # DID 可验证声明验证服务对接
 
 ## 安装
 
-首先运行 nmp 命令并导入 `@ont-dev/ont-tag` 包。
-
 ```js
 npm i @ont-dev/ont-tag
 ```
 
-然后通过下面的 `import` 语句导入 `@ont-dev/ont-tag` 包中的模块。
+## 导入
 
 ```js
-import VC from '@ont-dev/ont-tag';
+import VC from "@ont-dev/ont-tag";
 ```
 
 下面的 `require` 语句也可以用于加载模块。
 
 ```js
-var VC = require('@ont-dev/ont-tag');
+var VC = require("@ont-dev/ont-tag");
 ```
 
-在浏览器中使用包中的方法时需要使用编译后的库。`browser.js` 文件在 `lib` 目录下，可以通过 `script` 标签来加入和使用：
+在浏览器中使用包中的方法时需要使用编译后的库。`browser.js` 文件在 `lib` 目录下：
 
 ```js
 <script src="./lib/browser.js"></script>
@@ -41,9 +39,10 @@ var areaList = VC.utils.areaList;
 | 方法名                                              | 描述                                           |
 | --------------------------------------------------- | ---------------------------------------------- |
 | [sendUserInfo](#发送身份认证请求)                   | 向信任锚服务发送身份认证请求和用户的 KYC 信息  |
-| [getVcList](#获取颁发的凭证)                        | 为已发送的身份认证请求获取相应颁发的凭证       |
+| [getSocialAuthLink](#获取第三方认证链接)              | 获取用于社交平台认证的 URL              |
+| [getVcList](#获取凭证)                        | 为已发送的身份认证请求获取相应的凭证       |
 | [utils.areaList](#arealist)                         | 返回支持的国家和地区及其相应的代号             |
-| [utils.docType](#doctype)                           | 返回有效的 KYC 文件类型                        |
+| [utils.authType](#authtype)                           | 返回有效的身份认证类型                        |
 | [utils.chainType](#chaintype)                       | 返回支持的区块链                               |
 | [utils.generateId](#generateid)                     | 用钱包地址生成对应的 ONT ID                    |
 | [utils.serializeSignMessage](#serializesignmessage) | 序列化传入的对象数据并生成 `base64` 编码字符串 |
@@ -58,11 +57,11 @@ var areaList = VC.utils.areaList;
 params // 待传参数
 {
   appId: string,    // Ontology 分配的应用 ID
-  backDoc: string,  // 所选文件最后一页的图像（已编码）
   region: string,  // 国籍（地区代号）
   docId: string,    // 文件 ID 号码
-  docType: string,  // 文件类型
+  authType: string,  // 文件或认证类型
   frontDoc: string, // 所选文件第一页的图像（已编码）
+  backDoc: string,  // 所选文件最后一页的图像（已编码）
   name: string,     // 和文件中一致的法定名称
   ownerDid: string  // 用户 DID，通过 utility 方法 generateId 生成
 }
@@ -70,11 +69,11 @@ params // 待传参数
 
 > **注意：** `frontDoc` 和 `backDoc` 图片需作为 `base64` 编码后生成的字符串传入。
 
-`region` 字段对应地区的代号。通过 utility 方法 [`areaList`](#arealist) 可以获取国家及对应代号列表。
+`region` 字段对应地区的代号。通过 `utils` 方法 [`areaList`](#arealist) 可以获取国家及对应代号列表。
 
-`ownerDid` 字段对应一个 ONT ID，可以通过 utility 方法 [`generateId`](#generateid) 生成。
+`ownerDid` 字段对应一个 ONT ID，可以通过 `utils` 方法 [`generateId`](#generateid) 生成。
 
-`docType` 字段描述身份认证所需文件的类型。通过 [`docType`](#doctype) utility 方法可以获取所有支持身份认证的文件类型。
+`authType` 字段描述身份认证类型或所发文件类型。通过 [`authType`](#authtype) `utils` 方法可以获取有效文件列表。
 
 使用用户信息和 API key 调用此方法来发送身份认证请求：
 
@@ -92,16 +91,38 @@ await VC.sendUserInfo({ ...params }, apiKey);
 | SIG_VERIFY_FAILED      | API 签名无效           |
 | INTERNAL_ERROR         | 出现内部错误           |
 
-> **注意：** 每个应用（通过 appid 和 API key 一起识别）针对同一用户的同一个文件（通过用户的 DID context 识别）只能发送 10 个请求。如果出现任何内部错误，请联系 Ontology 团队。
+> **注意：** 每个应用（通过 appid 和 API key 一起识别）针对同一用户的同一个文件或认证方式（通过用户的 DID context 识别）只能发送 10 个请求。如果出现任何内部错误，请联系 Ontology 团队。
 
-### 获取颁发的凭证
+### 获取第三方认证链接
 
-发送身份认证请求后，可以通过本方法获取用户的凭证数据。
+调用此方法会返回一个触发社交媒体平台用户身份认证的 URL。
+
+```ts
+getSocialAuthLink(ownerDid, authType, apiKey, appId);
+```
+
+需要传入四种参数：
+- `ownerDid`: 用户的 DID
+- `authType`: 认证方式（社交媒体）， [请见参考](#authtype)
+- `apiKey`: 你的 API key
+- `appId`: 你的 app ID
+
+调用方法后，返回的 URL 会触发指定社交平台的 OAuth 身份认证。
+
+```ts
+url: string;
+```
+
+成功授权后会颁发凭证，可以证明一个社交媒体账户和对应的 DID 的关系。
+
+### 获取凭证
+
+发送身份认证请求后，可以通过本方法获取为用户颁发的凭证。
 
 需要传入两种参数。用户（或者说凭证持有者）的 DID，以及 ID 文件的类型。 
 
 ```js
-const result = await VC.getVcList(ownerDid, docType);
+const result = await VC.getVcList(ownerDid, authType);
 ```
 
 如果身份认证成功，`encryptOriginData` 字段会包含序列化后的凭证数据。
@@ -119,7 +140,7 @@ const result = await VC.getVcList(ownerDid, docType);
 }
 ```
 
-| 状态码 | 描述         |
+| 状态 | 描述         |
 | :----: | ------------ |
 |   1    | 身份认证成功 |
 |   2    | 身份认证失败 |
@@ -150,12 +171,12 @@ VC.utils.areaList;
 ]
 ```
 
-#### `docType`
+#### `authType`
 
-使用此方法可以得到所有身份认证接受的文件的类型，数据类型为对象。
+使用此方法可以返回所有支持的身份认证类型和文件类型，数据类型为对象。
 
 ```js
-VC.utils.docType;
+VC.utils.authType;
 ```
 
 响应结构如下：
@@ -165,6 +186,12 @@ VC.utils.docType;
   Passport: 'passport',
   IdCard: 'id_card',
   DrivingLicense: 'driving_license'
+  Twitter: 'twitter',
+  Github: 'github',
+  Linkedin: 'linkedin',
+  Line: 'line',
+  Amazon: 'amazon',
+  Kakao: 'kakao'
 }
 ```
 
@@ -180,7 +207,7 @@ VC.utils.chainType;
 
 ```js
 {
-  ETH: 'eth',
+  ETH: 'etho',
   BSC: 'bnb'
 }
 ```
@@ -198,7 +225,7 @@ const ownerDid = VC.utils.generateId("0xdc6...974a9", chainType);
 传入以下参数调用本方法可以返回通过 `base64` 序列化后的 JWT 字符串：
 
 1. `jwtStr` - 凭证的 JWT 字符串
-2. `audienceId` - 凭证验证者的 DID 
+2. `audienceId` - 凭证使用者的 DID 
 3. `ownerDid` - 凭证所有者的 DID 
 4. `effectiveTime` - 展示有效时长（秒数），例如 1 天 = 86400 
 
