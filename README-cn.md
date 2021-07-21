@@ -185,7 +185,7 @@ VC.utils.authType;
 {
   Passport: 'passport',
   IdCard: 'id_card',
-  DrivingLicense: 'driving_license'
+  DrivingLicense: 'driving_license',
   Twitter: 'twitter',
   Github: 'github',
   Linkedin: 'linkedin',
