@@ -13,13 +13,13 @@ npm i @ont-dev/ont-tag
 You can now use the following `import` statement to bring in all the modules from the `@ont-dev/ont-tag` package.
 
 ```js
-import VC from '@ont-dev/ont-tag';
+import VC from "@ont-dev/ont-tag";
 ```
 
 The following `require` statement can also be used to load the modules.
 
 ```js
-var VC = require('@ont-dev/ont-tag');
+var VC = require("@ont-dev/ont-tag");
 ```
 
 To use the methods in a browser, you must use the compiled version of the library. The `browser.js` file is located in the `lib` directory. You can include it in your project using a `script` tag as follows.
@@ -38,17 +38,18 @@ var areaList = VC.utils.areaList;
 
 ### Method list
 
-| Method name                                           | Description                                                                      |
-| ----------------------------------------------------- | -------------------------------------------------------------------------------- |
-| [sendUserInfo](#sending-an-authentication-request)    | Sends authentication request to the trust anchor service with user's KYC details |
-| [getVcList](#fetching-the-issued-credential)          | Fetches any issued credentials for previously sent authentication requests       |
-| [utils.areaList](#arealist)                           | Returns a list of countries and regions with their respective aliases            |
-| [utils.docType](#doctype)                             | Returns a list of valid KYC document types                                       |
-| [utils.chainType](#chaintype)                         | Returns the list of supported chains                                             |
-| [utils.generateId](#generateid)                       | Generates a valid ONT ID using a wallet addresses                                |
-| [utils.serializeSignMessage](#serializesignmessage)   | Serializes the passed object data to generate a `base64` string                  |
-| [utils.createPresentation](#createpresentation)        | Generates a presentation for the passed credential data payload                  |
-| [utils.deserialize](#deserialize)                     | Deserializes the passed `base64` string to an object                             |
+| Method name                                                 | Description                                                                      |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| [sendUserInfo](#sending-an-authentication-request)          | Sends authentication request to the trust anchor service with user's KYC details |
+| [getSocialAuthLink](#fetch-third-party-authentication-link) | Fetch URL to initiate social media platform authentication                       |
+| [getVcList](#fetching-the-issued-credential)                | Fetches any issued credentials for previously sent authentication requests       |
+| [utils.areaList](#arealist)                                 | Returns a list of countries and regions with their respective aliases            |
+| [utils.authType](#authtype)                                 | Returns a list of valid authentication types                                     |
+| [utils.chainType](#chaintype)                               | Returns the list of supported chains                                             |
+| [utils.generateId](#generateid)                             | Generates a valid ONT ID using a wallet addresses                                |
+| [utils.serializeSignMessage](#serializesignmessage)         | Serializes the passed object data to generate a `base64` string                  |
+| [utils.createPresentation](#createpresentation)             | Generates a presentation for the passed credential data payload                  |
+| [utils.deserialize](#deserialize)                           | Deserializes the passed `base64` string to an object                             |
 
 ### Sending an Authentication Request
 
@@ -58,11 +59,11 @@ This method is used to send authentication requests for a user's KYC data. It ta
 params // parameters to be passed
 {
   appId: string,    // Application ID, assigned by Ontology
-  backDoc: string,  // Last page image of the selected document (encoded)
   region: string,  // Nationality (area alias)
   docId: string,    // Document ID no.
-  docType: string,  // Document type
+  authType: string,  // Document or authentication type
   frontDoc: string, // Front page image of the selected document (encoded)
+  backDoc: string,  // Last page image of the selected document (encoded)
   name: string,     // Legal name as in document
   ownerDid: string  // DID of the user, generated using the generateId utility method
 }
@@ -74,7 +75,7 @@ The `region` field takes the respective alias for each region. Use the [`areaLis
 
 The `ownerDid` field takes an ONT ID. You can generate one using the [`generateId`](#generateid) utility method.
 
-The `docType` field specifies the type of document information sent for authentication. Use the [`docType`](#doctype) utility method to fetch the list of valid documents.
+The `authType` field specifies the type of document sent for authentication. Use the [`authType`](#authtype) utility method to fetch the list of valid documents.
 
 Call the method with the user info and your API key to send an authentication request.
 
@@ -92,36 +93,39 @@ It returns `true` for a successful request and an error message if an exception 
 | SIG_VERIFY_FAILED      | Invalid API signature             |
 | INTERNAL_ERROR         | Internal error occurred           |
 
-> **Note:** Each application (identified with the combination of their appid and API key) is limited to sending 10 requests for a user's particular document (identified with a user's DID context). Also, in case of an internal error, please get in touch with the Ontology team.
+> **Note:** Each application (identified with the combination of their appid and API key) is limited to sending 10 requests for a user's particular document/authentication method (identified with a user's DID context). Also, in case of an internal error, please get in touch with the Ontology team.
 
+### Fetch Third Party Authentication Link
 
+Invoking this method returns a URL that can be used to prompt user authentication for a social media platform.
 
-获取社交认证链接
-
-```javascript
-/**
-accountId, docType, apiKey, appId
-*/
-
-getSocialAuthLink(accountId, docType, apiKey, appId)
-
-
-retutn
-url: string  // SocialLink
+```ts
+getSocialAuthLink(ownerDid, authType, apiKey, appId);
 ```
 
+It takes four parameters.
 
+- `ownerDid`: User's DID
+- `authType`: The authentication method (social media platform). [See here](#authtype)
+- `apiKey`: Your API key
+- `appId`: Your app ID
 
+The method returns a URL that triggers OAuth authentication for a particular platform.
 
+```ts
+url: string;
+```
 
-### Fetching the Issued Credential
+Once successfully authorized, a credential will be issued that can be used to prove the relationship between a social media account and a DID.
 
-You can use this method to fetch the credential data for a user after having sent a data authentication request.
+### Fetching Credentials
 
-This method takes two parameters, the DID of the user (or owner in the context of a credential), and the ID document type. 
+You can use this method to fetch the issued credentials for a user after having sent a data authentication request.
+
+This method takes two parameters, the DID of the user (or owner in the context of a credential), and the ID document type.
 
 ```js
-const result = await VC.getVcList(ownerDid, docType);
+const result = await VC.getVcList(ownerDid, authType);
 ```
 
 If the authentication was successful, the `encryptOriginData` field will contain serialized credential data.
@@ -170,12 +174,12 @@ The response is structured as follows.
 ]
 ```
 
-#### `docType`
+#### `authType`
 
-This method returns the list of accepted document types for authentication as an object.
+This method returns the list of supported documents and authentication types as an object.
 
 ```js
-VC.utils.docType;
+VC.utils.authType;
 ```
 
 The response is of the following form.
@@ -185,12 +189,12 @@ The response is of the following form.
   Passport: 'passport',
   IdCard: 'id_card',
   DrivingLicense: 'driving_license',
-  Twitter = 'twitter',
-  Github = 'github',
-  Linked = 'linked',
-  Line = 'line',
-  Amzon = 'amzon',
-  Kakao = 'kakao'
+  Twitter: 'twitter',
+  Github: 'github',
+  Linkedin: 'linkedin',
+  Line: 'line',
+  Amazon: 'amazon',
+  Kakao: 'kakao'
 }
 ```
 
