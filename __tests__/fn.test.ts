@@ -185,7 +185,7 @@ describe("make presentation", () => {
 
 describe("SocialAuth", () => {
   test("getSocialAuthLink", () => {
-    const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
-    console.log('link: ', getSocialAuthLink(accountId, AuthType.Amazon, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
+    const accountId = generateId('0x5c7b386B2B87793a4E701CbBE22a53678446629b', chainType.ETH);
+    console.log('link: ', getSocialAuthLink(accountId, AuthType.Spotify, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
   })
 })
