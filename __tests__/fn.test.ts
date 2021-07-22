@@ -18,11 +18,11 @@ import { areaList } from "../src/utils/country";
 import { userInfo } from './info';
 
 describe("test user info", () => {
-  test("send user info", async () => {
-    const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
-    let result = await sendUserInfo({ ...userInfo, ownerDid }, '521113c1-9e5b-4d00-b137-c91ecad424ff');
-    console.log('result', result)
-  }, 30000)
+  // test("send user info", async () => {
+  //   const ownerDid = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
+  //   let result = await sendUserInfo({ ...userInfo, ownerDid }, '521113c1-9e5b-4d00-b137-c91ecad424ff');
+  //   console.log('result', result)
+  // }, 30000)
   test("get user vc", async () => {
     // const accountId = generateId('0x5c7b386B2B8779304E701CbBE22a53671446629b', chainType.ETH);
     // did:ont:0x5c7b386B2B8779304E701CbBE22a53671446629b
@@ -185,7 +185,7 @@ describe("make presentation", () => {
 
 describe("SocialAuth", () => {
   test("getSocialAuthLink", () => {
-    const accountId = generateId('0x5c7b386B2B87793a4E701CbBE22a53678446629b', chainType.ETH);
+    const accountId = generateId('0x5c7b386B2B87793a467018bBE22a53678446629b', chainType.ETH);
     console.log('link: ', getSocialAuthLink(accountId, AuthType.Spotify, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
   })
 })

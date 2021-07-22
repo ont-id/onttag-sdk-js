@@ -16,5 +16,6 @@ const utils = {
 export {
   sendUserInfo,
   getVcList,
+  getSocialAuthLink,
   utils
 }
