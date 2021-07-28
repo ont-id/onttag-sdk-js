@@ -81,7 +81,9 @@ You can use the Java SDK to process credentials and make on-chain verifications.
 
 Ontology's Chrome extension wallet Cyano, and mobile data wallet **ONTO** support credential management out of the box.
 
-> Note: No user data is stored on TAG servers in any form. All the credentials are to be stored and maintained by the user. In case the user loses access to their credential, we cannot recover it for them and they would need to go through the process of getting a new one.
+# Data Privacy and Credential Recovery
+
+No user data is stored on TAG servers in any form. All the credentials are to be stored and maintained by the user. In case the user loses access to their credential, we cannot recover it for them and they would need to go through the process of getting a new one.
 
 # Pricing
 
