@@ -39,7 +39,7 @@
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.0.0",
     "moment": "^2.29.1",
-    "ontology-ts-sdk": "^1.1.20",
+    "ontology-ts-sdk": "^1.1.22",
     "stream-browserify": "^3.0.0",
     "typescript": "^4.2.4",
     "web3": "^1.3.6"
