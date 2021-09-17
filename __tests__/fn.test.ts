@@ -162,8 +162,12 @@ describe("test Credentials", () => {
 
 describe("make presentation", () => {
   test("presentation fn", async () => {
-    const web3 = new Web3(Web3.givenProvider);
-    const ownerDid = generateId('0xCb45c3C4b6ED950070E6F90aA5381bdBD07D98CD', chainType.ETH);
+    // const web3 = new Web3(Web3.givenProvider);
+    const adminPrivateKey = new Crypto.PrivateKey("1f70a6f8b118e3cab9dc23f879c7bb7ff4bfbd7b611b03c758e1f45e7cd9583b")
+
+    // const ownerDid = generateId('0xCb45c3C4b6ED950070E6F90aA5381bdBD07D98CD', chainType.ETH);
+    // did:ont:AcFNy7vYUu8acN7c5tXPZZPbVE6r1JTh7
+    const ownerDid = "did:ont:AcFNy7vYUu8acN7c5tXPZZPbVE6r1JTh7";
     let encryptOriginData = 'eyJhbGciOiJFUzI1NiIsImtpZCI6ImRpZDpvbnQ6QVBjOEZCZEdZZHpEdFdyRnA4cTJCU1VGWDJIQW5CdUJuYSNrZXlzLTEiLCJ0eXAiOiJKV1QifQ==.eyJpc3MiOiJkaWQ6b250OkFQYzhGQmRHWWR6RHRXckZwOHEyQlNVRlgySEFuQnVCbmEiLCJleHAiOjE2NTQ5NDE5MjksIm5iZiI6MTYyMzQwNTkyOSwiaWF0IjoxNjIzNDA1OTI5LCJqdGkiOiJ1cm46dXVpZDphOGEzYjQ2Yi00ZmQ0LTQ4MmQtOTlhMy03OTg5MTdiYzk3MDQiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vb250aWQub250LmlvL2NyZWRlbnRpYWxzL3YxIiwiY3JlZGVudGlhbDpzZnBfcGFzc3BvcnRfYXV0aGVudGljYXRpb24iXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCJdLCJjcmVkZW50aWFsU3ViamVjdCI6eyJOYW1lIjoiSFNVQU4gWUFORyIsIkJpcnRoRGF5IjoiMTk5NC0wMy0wOSIsIkV4cGlyYXRpb25EYXRlIjoiMjAyMi0wMy0xMiIsIklERG9jTnVtYmVyIjoiRU0yNjAzODYiLCJJc3N1ZXJOYW1lIjoiU2h1ZnRpcHJvIiwidXNlcl9kaWQiOiJkaWQ6ZXRoOjVjN2IzODZCMkI4Nzc5MzA0RTcwMUNiQkUyMmE1MzY3MTQ0NjYyOWIifSwiY3JlZGVudGlhbFN0YXR1cyI6eyJpZCI6IjY1ZDM1NzdjZWVmZTBlNjgwMDVmZmEzNTA1NjhjNzUyYTgyMjllNjAiLCJ0eXBlIjoiQXR0ZXN0Q29udHJhY3QifSwicHJvb2YiOnsiY3JlYXRlZCI6IjIwMjEtMDYtMTFUMTA6MDU6MjlaIiwicHJvb2ZQdXJwb3NlIjoiYXNzZXJ0aW9uTWV0aG9kIn19fQ==.Ac/7tyOuhCEtYzEg/In6VYCpHmhiCzizvCNsgW9R3HyBJI/S9jK74xvuddL+tNQo5GRLQORBsYq0Gqv0OrLzV0Y='
     const serializeMessage: signMessageType = {
       jwtStr: encryptOriginData,
@@ -173,11 +177,14 @@ describe("make presentation", () => {
     }
     const originMessage = serializeSignMessage(serializeMessage);
     console.log('originMessage', originMessage);
-    const { signature } = await web3.eth.accounts.sign(originMessage, '57aa4b1fa4f1bc6824d8ed3cea202b4753e0734ccd94a4a7ba941a3f46739cce');
-    console.log('signature', signature);
+    // const { signature } = await web3.eth.accounts.sign(originMessage, '57aa4b1fa4f1bc6824d8ed3cea202b4753e0734ccd94a4a7ba941a3f46739cce');
+
+    const sig = adminPrivateKey.sign(originMessage)
+
+    console.log('signature', sig.serializeHex());
     let presentation = createPresentation({
       originMessage,
-      signature
+      signature: sig.serializeHex()
     });
     console.log('presentation', presentation);
   })
@@ -187,5 +194,16 @@ describe("SocialAuth", () => {
   test("getSocialAuthLink", () => {
     const accountId = generateId('0x5c7b386B2B87793a467018bBE22a53678446629b', chainType.ETH);
     console.log('link: ', getSocialAuthLink(accountId, AuthType.Linkedin, '521113c1-9e5b-4d00-b137-c91ecad424ff', 'test001'))
+  })
+})
+
+describe("test Ontology sign message", () => {
+  test("test Ontology sign message fn", () => {
+    console.log('Credentials', Crypto.PrivateKey);
+    const adminPrivateKey = new Crypto.PrivateKey("1f70a6f8b118e3cab9dc23f879c7bb7ff4bfbd7b611b03c758e1f45e7cd9583b")
+    const sig = adminPrivateKey.sign('11111')
+    console.log("sign", {
+      sign: sig.serializeHex()
+    })
   })
 })
