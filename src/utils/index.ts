@@ -125,9 +125,8 @@ export const deserialize = (JWTStr: string): credentialType => {
  */
 
 export const serializeSignMessage = (messageType: signMessageType) => {
-  const { issuer } = deserialize(messageType.jwtStr);
   const verifiablePresentationAttribute = new Credentials.VerifiablePresentationAttribute([messageType.jwtStr]);
-  const vpPayload = new Credentials.VpPayload(issuer, verifiablePresentationAttribute, Date.now(), messageType.audienceId, messageType.ownerDid, new Date(Date.now() + messageType.effectiveTime));
+  const vpPayload = new Credentials.VpPayload(messageType.ownerDid, verifiablePresentationAttribute, Date.now(), messageType.audienceId, messageType.ownerDid, new Date(Date.now() + messageType.effectiveTime));
   const vpPayloadString = vpPayload.serialize();
   let jwtHeader = new Credentials.JwtHeader(Crypto.SignatureScheme.ECDSAwithSHA256.labelJWS, messageType.ownerDid + '#keys-1');
   let jwtHeaderString = jwtHeader.serialize(Crypto.SignatureScheme.ECDSAwithSHA256, messageType.ownerDid + '#keys-1');
