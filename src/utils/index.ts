@@ -1,4 +1,5 @@
 import {decode, encode} from 'base64-url'
+import { Base64 } from 'js-base64';
 import CryptoJS from 'crypto-js'
 import moment from 'moment';
 import {Credentials, Crypto} from 'ontology-ts-sdk'
@@ -142,7 +143,7 @@ export const serializeSignMessage = (messageType: signMessageType) => {
  */
 
 export const createPresentation = (presentationType: createPresentationType) => {
-  const signatureJwt = encode(presentationType.signature,'utf-8')
+  const signatureJwt = Base64.encode(presentationType.signature)
   console.log('signatureJwt', signatureJwt);
   return presentationType.originMessage + '.' + signatureJwt;
 }

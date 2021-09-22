@@ -1,6 +1,6 @@
 {
   "name": "@ont-dev/ont-tag",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Verifiable Credential Service Integration",
   "license": "MIT",
   "repository": "https://github.com/ontology-tech/onttag-sdk-js.git",
@@ -38,6 +38,7 @@
     "base64-url": "^2.3.3",
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.0.0",
+    "js-base64": "^3.7.1",
     "moment": "^2.29.1",
     "ontology-ts-sdk": "^1.1.22",
     "stream-browserify": "^3.0.0",
