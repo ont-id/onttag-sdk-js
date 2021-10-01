@@ -79,5 +79,5 @@ export const getSocialAuthLink = (ownerDid: string = '', authType: string, apiKe
       credentialContext = CredentialContextType[key]
     }
   });
-  return `http://128.1.40.156:8067?context=${credentialContext}&ontid=${ownerDid}&apiKey=${apiKey}&appId=${appId}&lang=en_us`
+  return `https://social.tag.ont.id?context=${credentialContext}&ontid=${ownerDid}&apiKey=${apiKey}&appId=${appId}&lang=en_us`
 }
