@@ -4,7 +4,7 @@ import axios from "axios";
 const service = axios.create({
   timeout: 60 * 1000, // request timeout
   headers: { "Content-Type": "application/json" },
-  baseURL: 'http://45.43.63.208:8585'
+  baseURL: 'https://api.ont.id/tag'
 });
 // request interceptor
 service.interceptors.request.use(
