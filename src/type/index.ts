@@ -30,7 +30,8 @@ export enum AuthType {
   Amazon = 'amazon',
   Kakao = 'kakao',
   Spotify = 'spotify',
-  Facebook = 'Facebook'
+  Facebook = 'Facebook',
+  Discord = 'discord',
 }
 
 export enum chainType {
@@ -48,7 +49,8 @@ export enum CredentialContextType {
   amazon = 'credential:amazon_authentication',
   kakao = 'credential:kakao_authentication',
   spotify = 'credential:spotify_authentication',
-  Facebook = 'credential:facebook_authentication'
+  Facebook = 'credential:facebook_authentication',
+  discord = 'credential:discord_authentication',
 }
 
 export interface proofType {

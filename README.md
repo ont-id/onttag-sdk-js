@@ -194,7 +194,8 @@ The response is of the following form.
   Linkedin: 'linkedin',
   Line: 'line',
   Amazon: 'amazon',
-  Kakao: 'kakao'
+  Kakao: 'kakao', 
+  Discord = 'discord',
 }
 ```
 
